@@ -12,7 +12,7 @@
 * ログイン機能
 
 ### 開発環境
-- xxxx
+- DB,MySQL
 - xxxx
 - xxxx.xx
 
