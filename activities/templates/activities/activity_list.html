@@ -1,0 +1,22 @@
+<h1>今日の活動</h1>
+
+<form method="post">
+  {% csrf_token %}
+  {% for activity in activities %}
+    <label>
+      <input type="checkbox"
+             name="{{ activity.id }}"
+             {% if activity.is_done %}checked{% endif %}>
+      {{ activity.get_activity_type_display }}
+    </label><br>
+  {% endfor %}
+  <button type="submit">保存</button>
+  {% if messages %}
+  <script>
+    alert("保存しました");
+  </script>
+{% endif %}
+</form>
+
+
+
