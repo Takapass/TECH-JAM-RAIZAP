@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}TECH JAM RAIZAP{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'activities/base.css' %}">
+    <link rel="stylesheet" href="{% static 'activities/home.css' %}">
+</head>
+
+<body>
+
+    <div class="app-wrapper">
+
+        <!-- ヘッダー -->
+        <header class="header">
+            <div class="header-inner">
+                <button class="hamburger" aria-label="menu">
+                    ☰
+                </button>
+                <h1 class="header-title">ホーム</h1>
+            </div>
+        </header>
+
+        <!-- メイン -->
+        <main class="main">
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li class="message {{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </main>
+
+        <!-- フッター（下部ナビ） -->
+        <footer class="footer">
+            <nav class="bottom-nav">
+                <a href="{% url 'home' %}" class="nav-item">ホーム</a>
+                <a href="#" class="nav-item">グループ</a>
+                <a href="{% url 'activity_list' %}" class="nav-item">アイデア</a>
+                <a href="#" class="nav-item">プロフィール</a>
+            </nav>
+        </footer>
+
+    </div>
+
+</body>
+
+</html>

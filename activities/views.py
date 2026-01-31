@@ -20,3 +20,10 @@ def activity_list(request):
     return render(request, 'activities/activity_list.html', {
         'activities': activities
     })
+
+
+def home(request):
+    activities = Activity.objects.all()
+    return render(request, 'activities/home.html', {
+        'activities': activities
+    })

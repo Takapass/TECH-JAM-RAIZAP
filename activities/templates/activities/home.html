@@ -1,0 +1,59 @@
+{% extends 'activities/base.html' %}
+{% load static %}
+
+{% block title %}ホーム{% endblock %}
+
+{% block content %}
+<div class="home">
+
+    <!-- 花エリア -->
+    <section class="flower-area">
+        <div class="flower">
+            <div class="petals"></div>
+            <div class="center"></div>
+            <div class="stem"></div>
+            <div class="leaves"></div>
+        </div>
+
+        <p class="days">
+            お花と過ごして<br>
+            <span>25日</span>
+        </p>
+    </section>
+
+    <!-- おすすめアイデア -->
+    <section class="recommend">
+        <h2>あなたへのおすすめアイデア</h2>
+
+        <div class="recommend-card">
+            <div class="recommend-header">
+                <div class="icon"></div>
+                <div class="title">健康ガチ勢</div>
+            </div>
+
+            <p class="description">
+                ～～～～～～～～～～～～～～～～～～
+            </p>
+
+            <div class="actions">
+                <button class="btn sub">今日はパス</button>
+                <button class="btn main">できた！</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下部カード -->
+    <section class="bottom-cards">
+        <div class="card">
+            <h3>人気の健康アイデア</h3>
+            <p>健康になろうさん</p>
+            <p>～～～～～～～～～～</p>
+        </div>
+
+        <div class="card">
+            <h3>グループランキング</h3>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
