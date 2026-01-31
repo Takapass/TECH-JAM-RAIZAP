@@ -15,7 +15,7 @@
     position: relative;
     width: 160px;
     height: auto;   /* or 250 */
-    margin: 0 auto 8px;
+    margin: 30px auto 8px;
 }
 
 .petals {
@@ -53,6 +53,7 @@
 .days {
     margin-top: 30px;
     font-size: 14px;
+    text-align: left;
 }
 
 .days span {
