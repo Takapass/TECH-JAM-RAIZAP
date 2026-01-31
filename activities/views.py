@@ -1,25 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Activity
-from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
-
-
-# def login_view(request):
-#     if request.method == "POST":
-#         print("POST:", request.POST)
-#         username = request.POST.get("username")
-#         password = request.POST.get("password")
-
-#         user = authenticate(request, username=username, password=password)
-#         print("USER:", user)
-
-#         if user is not None:
-#             login(request, user)
-#             return redirect("activities/activity_list.html")
-
-#     return render(request, "activities/login.html")
 
 
 def login_view(request):
@@ -79,4 +62,13 @@ def activity_list(request):
         return redirect("activity_list")  # POST後はリダイレクト（OK）
 
     activities = Activity.objects.all()
-    return render(request, "activities/activity_list.html", {"activities": activities})
+    return render(request, 'activities/activity_list.html', {
+        'activities': activities
+    })
+
+
+def home(request):
+    activities = Activity.objects.all()
+    return render(request, 'activities/home.html', {
+        'activities': activities
+    })

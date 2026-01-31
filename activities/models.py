@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Activity(models.Model):
     ACTIVITY_CHOICES = [
         ('drink','水を飲んだ'),
