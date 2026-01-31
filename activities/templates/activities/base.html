@@ -21,9 +21,42 @@
                 <button class="hamburger" aria-label="menu">
                     ☰
                 </button>
-                <h1 class="header-title">ホーム</h1>
+                <h1 class="header-title">
+                    {% block page_title %}ホーム{% endblock %}
+                </h1>                
             </div>
         </header>
+
+        <nav class="side-menu" id="sideMenu" aria-hidden="true">
+            <!-- メニュー用ヘッダー -->
+    <div class="menu-header">
+        <span></span>
+        <h2>{% block hamburger_title %}ホーム{% endblock %}</h2>
+        <button class="close-btn" aria-label="close">×</button>
+    </div>
+
+    <!-- ユーザー情報 -->
+    <div class="menu-profile">
+        <div class="avatar"></div>
+        <div>
+            <p class="name">お花大好き先生</p>
+            <p class="profile-link">プロフィールを表示</p>
+        </div>
+    </div>
+
+    <!-- メインカード -->
+    <div class="menu-main-card">
+        <div class="flower-icon"></div>
+        <p>お花図鑑</p>
+    </div>
+
+    <!-- メニューリスト -->
+    <ul class="menu-list">
+        <li>設定</li>
+        <li>設定</li>
+        <li>設定</li>
+    </ul>
+        </nav>
 
         <!-- メイン -->
         <main class="main">
@@ -50,6 +83,8 @@
         </footer>
 
     </div>
+
+    <script src="{% static 'activities/hamburger.js' %}"></script>
 
 </body>
 
