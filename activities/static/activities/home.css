@@ -1,0 +1,155 @@
+/* ===== HOME ===== */
+
+.home {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+/* 花エリア */
+.flower-area {
+    text-align: center;
+}
+
+.flower {
+    position: relative;
+    width: 160px;
+    height: auto;   /* or 250 */
+    margin: 30px auto 8px;
+}
+
+.petals {
+    width: 160px;
+    height: 160px;
+    background: #dcdcdc;
+    border-radius: 50%;
+}
+
+.center {
+    position: absolute;
+    top: 35px;
+    left: 35px;
+    width: 90px;
+    height: 90px;
+    background: #ffe070;
+    border-radius: 50%;
+}
+
+.stem {
+    width: 4px;
+    height: 60px;
+    background: #cfcfcf;
+    margin: 0 auto;
+}
+
+.leaves {
+    width: 60px;
+    height: 20px;
+    background: #dcdcdc;
+    border-radius: 50%;
+    margin: 6px auto 0;
+}
+
+.days {
+    margin-top: 30px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.days span {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* おすすめ */
+.recommend h2 {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.recommend-card {
+    background: #e0e0e0;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+.recommend-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon {
+    width: 32px;
+    height: 32px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.description {
+    margin: 8px 0;
+    font-size: 13px;
+}
+
+.actions {
+    display: flex;
+    gap: 8px;
+}
+
+.btn {
+    flex: 1;
+    height: 36px;
+    border-radius: 18px;
+    border: none;
+    font-size: 13px;
+}
+
+.btn.sub {
+    background: #fff;
+}
+
+.btn.main {
+    background: #7ee65a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 下部カード */
+.bottom-cards {
+    display: flex;
+    gap: 12px;
+}
+
+.card {
+    flex: 1;
+    background: #e0e0e0;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 12px;
+}
+
+/* ===== PC（1440px） ===== */
+@media screen and (min-width: 768px) {
+    .flower {
+        width: 220px;
+        height: auto;
+    }
+
+    .petals {
+        width: 220px;
+        height: 220px;
+    }
+
+    .center {
+        top: 55px;
+        left: 55px;
+        width: 110px;
+        height: 110px;
+    }
+}

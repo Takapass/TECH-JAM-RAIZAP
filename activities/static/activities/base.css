@@ -1,0 +1,240 @@
+/* リセット */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+                 "Segoe UI", "Noto Sans JP", sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+/* アプリ全体 */
+.app-wrapper {
+    width: 100%;
+    max-width: 390px;
+    min-height: 100vh;
+    margin: 0 auto;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ===== ヘッダー ===== */
+.header {
+    height: 56px;
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #eee6e6;
+}
+
+.header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+}
+
+.hamburger {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.header-title {
+    margin: 0 auto;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ===== メイン ===== */
+.main {
+    flex: 1;
+    padding: 16px;
+}
+
+/* Django messages */
+.messages {
+    list-style: none;
+    margin-bottom: 12px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.message.success {
+    background-color: #e6f4ea;
+    color: #1e7f43;
+}
+
+/* ===== フッター ===== */
+.footer {
+    height: 64px;
+    border-top: 1px solid #e0e0e0;
+    background-color: #fafafa;
+}
+
+.bottom-nav {
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.nav-item {
+    text-decoration: none;
+    color: #666;
+    font-size: 12px;
+}
+/* ハンバーガーメニュー（サイドメニュー） */
+.side-menu {
+    position: fixed;
+    /* top: 56px;  */
+    left: 0;
+    /* width: 250px; */
+    /* height: calc(100vh - 56px); */
+    background-color: #eee6e6;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.2);
+    /* transform: translateX(-100%); */
+    transition: transform 0.3s ease;
+    padding: 1rem;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #ffffff;
+    transform: translateY(-100%);
+    z-index: 2000;
+}
+
+.side-menu.open {
+    /* transform: translateX(0); */
+    transform: translateY(0);
+}
+
+.side-menu ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.side-menu li + li {
+    margin-top: 1rem;
+}
+
+.side-menu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+    font-size: 16px;
+    display: block;
+}
+
+.menu-header {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background: #eee6e6;
+    border-bottom: 1px solid #ddd;
+}
+
+.menu-header h2 {
+    font-size: 16px;
+}
+
+.close-btn {
+    font-size: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-profile {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: #d6caca;
+}
+
+.avatar {
+    width: 56px;
+    height: 56px;
+    background: #fff;
+    border-radius: 50%;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.profile-link {
+    font-size: 12px;
+    color: #666;
+}
+
+.menu-main-card {
+    margin: 24px 16px;
+    background: #e0e0e0;
+    border-radius: 24px;
+    padding: 32px;
+    text-align: center;
+}
+
+.flower-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 8px;
+    background: #ffe070;
+    border-radius: 50%;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 0 16px;
+}
+
+.menu-list li {
+    padding: 16px 0;
+    border-bottom: 1px solid #e0e0e0;
+    font-weight: 500;
+}
+
+/* ===== PC表示（1440px） ===== */
+@media screen and (min-width: 768px) {
+
+    .app-wrapper {
+        max-width: 1440px;
+        border-left: 1px solid #ddd;
+        border-right: 1px solid #ddd;
+    }
+
+    .main {
+        padding: 24px;
+    }
+
+    .header-title {
+        font-size: 18px;
+    }
+
+    .nav-item {
+        font-size: 14px;
+    }
+
+    /* ハンバーガー非表示 */
+    .hamburger {
+        display: none;
+    }
+
+    /* フルスクリーンメニューはPCでは使わない */
+    .side-menu {
+        display: none;
+    }
+}
