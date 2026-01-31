@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="UTF-8">
     <title>ログイン</title>
 </head>
+
 <body>
     <h1>ログイン</h1>
 
@@ -27,5 +29,20 @@
         アカウントをお持ちでない方は
         <a href="{% url 'signup' %}">新規登録</a>
     </p>
+    {% if messages %}
+    {% for message in messages %}
+    <div style="color: green;">
+        {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% if user.is_authenticated %}
+    <p>ログイン中です</p>
+    {% else %}
+    <p>未ログインです</p>
+    {% endif %}
+    <p>ログイン中：{{ user.username }}</p>
+
 </body>
+
 </html>
