@@ -1,0 +1,7 @@
+[
+  {"model": "activities.activity", "pk": 1, "fields": {"activity_type": "drink", "is_done": false}},
+  {"model": "activities.activity", "pk": 2, "fields": {"activity_type": "outside", "is_done": false}},
+  {"model": "activities.activity", "pk": 3, "fields": {"activity_type": "stroll", "is_done": false}},
+  {"model": "activities.activity", "pk": 4, "fields": {"activity_type": "stretch", "is_done": false}},
+  {"model": "activities.activity", "pk": 5, "fields": {"activity_type": "gym", "is_done": false}}
+]
