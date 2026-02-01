@@ -1,0 +1,91 @@
+body {
+    background: #f3f3f3;
+    font-family: sans-serif;
+}
+
+.container {
+    width: 340px;
+    margin: 60px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+}
+
+label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+.password-box {
+    position: relative;
+}
+
+.eye {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.remember {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.btn {
+    width: 100%;
+    margin-top: 25px;
+    padding: 14px;
+    border-radius: 25px;
+    border: none;
+    background: #cfcfcf;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.forgot {
+    text-align: center;
+    margin-top: 15px;
+    text-decoration: underline;
+    font-size: 14px;
+}
+
+.signup-text {
+    text-align: center;
+    font-size: 14px;
+}
+
+.signup-btn {
+    display: block;
+    text-align: center;
+    background: #e5e5e5;
+    padding: 10px;
+    border-radius: 20px;
+    text-decoration: none;
+    color: black;
+    margin-top: 10px;
+}
+

@@ -6,4 +6,8 @@ __pycache__/
 db.sqlite3
 
 # Editor
-.vscode/
+.vscode/__pycache__/
+
+echo "__pycache__/" >> .gitignore
+echo "*.pyc" >> .gitignore
+git add .gitignore

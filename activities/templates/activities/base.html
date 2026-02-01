@@ -60,6 +60,7 @@
 
         <!-- メイン -->
         <main class="main">
+        {% if request.resolver_match.url_name == "login" %}
             {% if messages %}
             <ul class="messages">
                 {% for message in messages %}
@@ -67,6 +68,7 @@
                 {% endfor %}
             </ul>
             {% endif %}
+        {% endif %}
 
             {% block content %}
             {% endblock %}
