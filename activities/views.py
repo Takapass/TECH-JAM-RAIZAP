@@ -36,10 +36,9 @@ def signup_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
         email = request.POST.get("email")
-        password1 = request.POST.get("password1")
-        password2 = request.POST.get("password2")
+        password = request.POST.get("password")
 
-        if not username or not password1 or not password2:
+        if not username or not password:
             messages.error(request, "ユーザー名とパスワードを入力してください")
             return render(request, "activities/signup.html")
 
@@ -47,14 +46,10 @@ def signup_view(request):
             messages.error(request, "このユーザー名はすでに使われています")
             return render(request, "activities/signup.html")
 
-        if password1 != password2:
-            messages.error(request, "パスワードが一致しません")
-            return render(request, "activities/signup.html")
-
-        User.objects.create_user(username=username, email=email, password=password1)
+        User.objects.create_user(username=username, email=email, password=password)
 
         messages.success(request, "登録が完了しました。ログインしてください")
-        return redirect("login")  # ← 成功が分かりやすい
+        return redirect("login")
 
     return render(request, "activities/signup.html")
 
