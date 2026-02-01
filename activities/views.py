@@ -27,7 +27,7 @@ def login_view(request):
             login(request, user)
             return redirect("activity_list")
         else:
-            messages.error(request, "ユーザー名またはメールアドレスかパスワードが違います")
+            messages.error(request, "*ユーザー名またはメールアドレスかパスワードが違います")
 
     return render(request, "activities/login.html")
 
@@ -39,14 +39,15 @@ def signup_view(request):
         password = request.POST.get("password")
 
         if not username or not password:
-            messages.error(request, "ユーザー名とパスワードを入力してください")
+            messages.error(request, "＊ユーザー名とパスワードを入力してください")
             return render(request, "activities/signup.html")
 
         if User.objects.filter(username=username).exists():
-            messages.error(request, "このユーザー名はすでに使われています")
+            messages.error(request, "＊このユーザー名はすでに使われています")
             return render(request, "activities/signup.html")
 
-        User.objects.create_user(username=username, email=email, password=password)
+        User.objects.create_user(username=username, email=email,
+                                 password=password)
 
         messages.success(request, "登録が完了しました。ログインしてください")
         return redirect("login")
