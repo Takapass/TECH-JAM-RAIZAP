@@ -1,0 +1,73 @@
+{% extends "activities/base.html" %}
+{% load static %}
+
+{% block title %}アイデア{% endblock %}
+{% block page_title %}アイデア{% endblock %}
+
+{% block content %}
+<h2 class="idea-title">みんなの健康アイデア</h2>
+
+<div class="idea-list">
+
+    <!-- 投稿カード -->
+    <div class="idea-card">
+        <div class="idea-header">
+            <div class="idea-avatar"></div>
+            <div class="idea-user">
+                <p class="idea-name">健康ガチ勢</p>
+                <p class="idea-date">5日前　10時29分</p>
+            </div>
+        </div>
+
+        <div class="idea-body">
+            <p class="idea-text">
+                これめっちゃ効果あった！<br>
+                ～～～～～～～～～～～～～～～～<br>
+                ～～～～～～～～～～～～～～～～
+            </p>
+
+            <div class="idea-image">
+                写真
+            </div>
+        </div>
+
+        <div class="idea-footer">
+            <span>♡ 12</span>
+            <span>コメント 3</span>
+        </div>
+    </div>
+
+    <!-- 同じカードを複製 -->
+    <div class="idea-card">
+        <div class="idea-header">
+            <div class="idea-avatar"></div>
+            <div class="idea-user">
+                <p class="idea-name">健康ガチ勢</p>
+                <p class="idea-date">5日前　10時29分</p>
+            </div>
+        </div>
+
+        <div class="idea-body">
+            <p class="idea-text">
+                これめっちゃ効果あった！<br>
+                ～～～～～～～～～～～～～～～～<br>
+                ～～～～～～～～～～～～～～～～
+            </p>
+
+            <div class="idea-image">
+                写真
+            </div>
+        </div>
+
+        <div class="idea-footer">
+            <span>♡ 12</span>
+            <span>コメント 3</span>
+        </div>
+    </div>
+
+    <div class="create-idea">
+        <div class="plus">＋</div>
+        <p>アイデアを投稿</p>
+    </div>
+</div>
+{% endblock %}

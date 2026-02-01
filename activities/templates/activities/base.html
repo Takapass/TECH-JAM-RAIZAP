@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="{% static 'activities/base.css' %}">
     <link rel="stylesheet" href="{% static 'activities/home.css' %}">
+    <link rel="stylesheet" href="{% static 'activities/idea.css' %}">
+    <link rel="stylesheet" href="{% static 'activities/group.css' %}">
 </head>
 
 <body>
@@ -77,7 +79,7 @@
             <nav class="bottom-nav">
                 <a href="{% url 'home' %}" class="nav-item">ホーム</a>
                 <a href="{% url 'group' %}" class="nav-item">グループ</a>
-                <a href="#" class="nav-item">アイデア</a>
+                <a href="{% url 'idea' %}" class="nav-item">アイデア</a>
                 <a href="#" class="nav-item">プロフィール</a>
             </nav>
         </footer>

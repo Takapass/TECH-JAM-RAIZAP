@@ -31,3 +31,7 @@ def home(request):
 
 def group(request):
     return render(request, 'activities/group.html')
+
+
+def idea(request):
+    return render(request, 'activities/idea.html')
