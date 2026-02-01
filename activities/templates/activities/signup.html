@@ -1,36 +1,61 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <title>新規登録</title>
+    <link rel="stylesheet" href="{% static 'activities/signup.css' %}">
 </head>
 <body>
+<div class="container">
+
     <h1>新規登録</h1>
+    <hr>
 
     <form method="post">
         {% csrf_token %}
 
-        <div>
-            <label>ユーザー名</label><br>
-            <input type="text" name="username" required>
+        <label>ユーザー名</label>
+        <input type="text" name="username" placeholder="ユーザー名を入力">
+
+        <label>メールアドレス</label>
+        <input type="email" name="email" placeholder="メールアドレスを入力">
+
+        <!-- <label for="username">ユーザー名</label>
+        <input id="username" type="text" name="username" autocomplete="username">
+        <label for="email">メール</label>
+        <input id="email" type="email" name="email" autocomplete="email"> -->
+        <label>パスワード</label>
+        <div class="password-box">
+            <input type="password" id="password" name="password" placeholder="パスワードを入力">
+            <span class="eye" onclick="togglePassword()">👁</span>
         </div>
 
-        <div>
-            <label>パスワード</label><br>
-            <input type="password" name="password1" required>
-        </div>
+        <!-- <label for="password1">パスワード</label>
+        <input id="password1" type="password" name="password1" autocomplete="new-password">
+        <label for="password2">確認</label>
+        <input id="password2" type="password" name="password2" autocomplete="new-password"> -->
 
-        <div>
-            <label>パスワード（確認）</label><br>
-            <input type="password" name="password2" required>
-        </div>
-
-        <button type="submit">登録</button>
+        <button type="submit" class="btn">登録</button>
     </form>
 
-    <p>
-        すでにアカウントをお持ちの方は
-        <a href="{% url 'login' %}">ログイン</a>
+    <p class="login-link">
+    <a href="{% url 'login' %}">ログインはこちら</a>
     </p>
+
+</div>
+
+<script>
+function togglePassword() {
+    const pass = document.getElementById("password");
+
+    if (pass.type === "password") {
+        pass.type = "text";
+    } else {
+        pass.type = "password";
+    }
+}
+</script>
+
 </body>
 </html>

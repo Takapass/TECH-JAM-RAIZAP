@@ -7,17 +7,27 @@ from django.contrib.auth.models import User
 
 def login_view(request):
     if request.method == "POST":
-        username = request.POST.get("username")
+        login_id = request.POST.get("login_id")
         password = request.POST.get("password")
 
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, username=login_id, password=password)
+
+        if user is None:
+            try:
+                user_obj = User.objects.get(email=login_id)
+                user = authenticate(
+                    request,
+                    username=user_obj.username,
+                    password=password
+                )
+            except User.DoesNotExist:
+                user = None
 
         if user is not None:
             login(request, user)
-            messages.success(request, "ログインされました")
             return redirect("activity_list")
         else:
-            messages.error(request, "ユーザー名かパスワードが違います")
+            messages.error(request, "ユーザー名またはメールアドレスかパスワードが違います")
 
     return render(request, "activities/login.html")
 
@@ -25,6 +35,7 @@ def login_view(request):
 def signup_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
+        email = request.POST.get("email")
         password1 = request.POST.get("password1")
         password2 = request.POST.get("password2")
 
@@ -40,7 +51,7 @@ def signup_view(request):
             messages.error(request, "パスワードが一致しません")
             return render(request, "activities/signup.html")
 
-        User.objects.create_user(username=username, password=password1)
+        User.objects.create_user(username=username, email=email, password=password1)
 
         messages.success(request, "登録が完了しました。ログインしてください")
         return redirect("login")  # ← 成功が分かりやすい
@@ -62,7 +73,7 @@ def activity_list(request):
         return redirect("activity_list")  # POST後はリダイレクト（OK）
 
     activities = Activity.objects.all()
-    return render(request, 'activities/activity_list.html', {
+    return render(request, 'activities/home.html', {
         'activities': activities
     })
 
