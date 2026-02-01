@@ -27,3 +27,7 @@ def home(request):
     return render(request, 'activities/home.html', {
         'activities': activities
     })
+
+
+def group(request):
+    return render(request, 'activities/group.html')

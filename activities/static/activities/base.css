@@ -95,13 +95,9 @@ body {
 /* ハンバーガーメニュー（サイドメニュー） */
 .side-menu {
     position: fixed;
-    /* top: 56px;  */
     left: 0;
-    /* width: 250px; */
-    /* height: calc(100vh - 56px); */
     background-color: #eee6e6;
     box-shadow: 2px 0 5px rgba(0,0,0,0.2);
-    /* transform: translateX(-100%); */
     transition: transform 0.3s ease;
     padding: 1rem;
     overflow-y: auto;
@@ -115,7 +111,6 @@ body {
 }
 
 .side-menu.open {
-    /* transform: translateX(0); */
     transform: translateY(0);
 }
 
