@@ -15,10 +15,11 @@ def login_view(request):
 
         if user is None:
             try:
-                user_obj = User.objects.get(email=login_id)
-                user = authenticate(
-                    request, username=user_obj.username, password=password
-                )
+                user_obj = User.objects.filter(email=login_id).first()
+                if user_obj:
+                    user = authenticate(
+                        request, username=user_obj.username, password=password
+                    )
             except User.DoesNotExist:
                 user = None
 
@@ -27,7 +28,7 @@ def login_view(request):
             return redirect("activity_list")
         else:
             messages.error(
-                request, "*ユーザー名またはメールアドレスかパスワードが違います"
+                request, "＊ユーザー名またはメールアドレスかパスワードが違います"
             )
 
     return render(request, "activities/login.html")
