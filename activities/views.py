@@ -92,7 +92,9 @@ def profile_view(request):
     context = {
         "user": user,
         "completed_count": completed_count,
-        "total_activities": total_activities,
+        'total_activities': total_activities,
+        # 当面は0を返す。将来的にユーザーの連続日数ロジックに置き換える
+        'streak_days': 0,
     }
     return render(request, "activities/profile.html", context)
 
