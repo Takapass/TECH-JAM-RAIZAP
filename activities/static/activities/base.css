@@ -207,6 +207,11 @@ body {
     font-weight: 500;
 }
 
+.logout {
+    position: fixed;
+    right: 16px;
+    bottom: 16px;
+}
 /* ===== PC表示（1440px） ===== */
 @media screen and (min-width: 768px) {
 
@@ -229,9 +234,9 @@ body {
     }
 
     /* ハンバーガー非表示 */
-    .hamburger {
+    /* .hamburger {
         display: none;
-    }
+    } */
 
     /* フルスクリーンメニューはPCでは使わない */
     .side-menu {

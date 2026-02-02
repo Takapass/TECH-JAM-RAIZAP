@@ -54,7 +54,7 @@
     <ul class="menu-list">
         <li>設定</li>
         <li>設定</li>
-        <li>設定</li>
+        <a href="{% url 'login' %}" class="logout">ログアウト</a>
     </ul>
         </nav>
 
@@ -80,7 +80,7 @@
                 <a href="{% url 'home' %}" class="nav-item">ホーム</a>
                 <a href="#" class="nav-item">グループ</a>
                 <a href="#" class="nav-item">アイデア</a>
-                <a href="#" class="nav-item">プロフィール</a>
+                <a href="{% url 'profile' %}" class="nav-item">プロフィール</a>
             </nav>
         </footer>
 
