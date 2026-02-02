@@ -1,0 +1,38 @@
+{% extends "activities/base.html" %}
+{% load static %}
+
+{% block title %}グループ{% endblock %}
+{% block page_title %}グループ{% endblock %}
+{% block hamburger_title %}グループ{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'activities/group.css' %}">
+
+<section class="group-page">
+
+    <h2 class="ranking-title">ランキング</h2>
+
+    <div class="ranking-grid">
+        {% for i in "123456" %}
+        <div class="ranking-card">
+            <div class="flower">
+                <div class="flower-petals"></div>
+                <div class="flower-center"></div>
+            </div>
+        
+            <!-- 下部エリア -->
+            <div class="rank-bottom">
+                <div class="rank-circle"></div>
+                <p class="rank-label">健康ガチ勢</p>
+            </div>
+        </div>        
+        {% endfor %}
+    </div>
+
+    <div class="create-group">
+        <div class="plus">＋</div>
+        <p>グループ作成</p>
+    </div>
+
+</section>
+{% endblock %}

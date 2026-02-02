@@ -1,0 +1,118 @@
+/* ===== グループページ ===== */
+
+.group-page {
+    padding-bottom: 16px;
+}
+
+/* タイトル */
+.ranking-title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 16px 0 24px;
+}
+
+/* ランキング */
+.ranking-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.ranking-card {
+    background: #e0e0e0;
+    border-radius: 16px;
+    padding: 16px 8px;
+    text-align: center ;
+    position: relative;
+    width: 113px;
+    height: 183px;
+}
+
+/* 花アイコン */
+.flower {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 12px;
+}
+
+.flower-center {
+    width: 32px;
+    height: 32px;
+    background: #ffd966;
+    border-radius: 50%;
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 2;
+}
+
+.flower-petals {
+    width: 64px;
+    height: 64px;
+    background: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* ラベル */
+.rank-label {
+    font-size: 12px;
+    margin: 0;
+}
+
+/* 左下丸 */
+.rank-circle {
+    width: 31px;
+    height: 31px;
+    background: #fff;
+    border-radius: 50%;
+    /* position: absolute; */
+    /* bottom: 8px; */
+    /* left: 8px; */
+}
+
+.rank-bottom {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* グループ作成 */
+.create-group {
+    margin-top: 24px;
+    border: 2px solid #333;
+    border-radius: 16px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.create-group .plus {
+    font-size: 32px;
+    line-height: 1;
+}
+
+.create-group p {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* ===== PC（1440px） ===== */
+@media screen and (min-width: 768px) {
+    .ranking-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+
+    .ranking-title {
+        font-size: 24px;
+    }
+}
