@@ -11,13 +11,19 @@
 <body>
     <div class="container">
         <h1>ログイン</h1>
+        {% if messages %}
+        {% for message in messages %}
+        <p class="message {{ message.tags }}">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
         <hr>
         <form method="post"> {% csrf_token %} <label>ユーザー名 または メールアドレス</label> <input type="text" name="login_id"
                 placeholder="ユーザー名 または メールアドレスを入力"> <label>パスワード</label>
             <div class="password-box"> <input type="password" id="password" name="password" placeholder="パスワードを入力">
-                <span class="eye" onclick="togglePassword()">👁</span> </div>
-                
-                 <button type="submit"class="btn">ログイン</button>
+                <span class="eye" onclick="togglePassword()">👁</span>
+            </div>
+
+            <button type="submit" class="btn">ログイン</button>
         </form>
         <p class="forgot">パスワードをお忘れですか？</p>
         <hr>
