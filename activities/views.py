@@ -95,3 +95,8 @@ def profile_view(request):
         "total_activities": total_activities,
     }
     return render(request, "activities/profile.html", context)
+
+
+@login_required(login_url="login")
+def group_view(request):
+    return render(request, "activities/group.html")
