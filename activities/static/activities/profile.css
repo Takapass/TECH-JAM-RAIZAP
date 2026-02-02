@@ -1,0 +1,153 @@
+/* Profile page styles (scoped to avoid conflicts with base.css) */
+.profile-container.new-layout {
+    padding: 0 18px 100px;
+}
+
+.profile-top {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 26px 0;
+}
+
+.avatar-col {
+    width: 110px;
+    flex: 0 0 110px;
+}
+
+.avatar-circle {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    background: #e6e6e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.avatar-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.info-col {
+    flex: 1;
+}
+
+.label-small {
+    color: #9aa29a;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.big-name {
+    margin: 0;
+    font-size: 26px;
+    color: #111;
+    font-weight: 700;
+    display: inline-block;
+}
+
+.name-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.icon-edit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background: transparent;
+    text-decoration: none;
+}
+
+.streak {
+    color: #8a8f85;
+    margin-top: 8px;
+    font-size: 13px;
+}
+
+.bio-box {
+    background: #f6efef;
+    border-radius: 12px;
+    padding: 16px;
+    margin: 18px 0;
+}
+
+.bio-label {
+    color: #b3b3b3;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.bio-area {
+    min-height: 78px;
+    background: transparent;
+    color: #333;
+}
+
+.settings-list {
+    background: transparent;
+}
+
+.settings-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 6px;
+    text-decoration: none;
+    color: #111;
+}
+
+.item-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #dcdcdc;
+    flex: 0 0 46px;
+}
+
+.item-text {
+    font-size: 18px;
+}
+
+.divider {
+    height: 1px;
+    background: #e6e6e6;
+    margin: 0 6px;
+}
+
+/* small screens */
+@media (max-width:420px) {
+    .big-name {
+        font-size: 22px
+    }
+
+    .avatar-col {
+        width: 90px
+    }
+
+    .avatar-circle {
+        width: 90px;
+        height: 90px
+    }
+}
+
+/* Namespaced selectors to minimize conflicts with base.css */
+.profile-container.new-layout .big-name {
+    line-height: 1;
+}
+
+.profile-container.new-layout .settings-item {
+    background: transparent;
+}
+
+.profile-container.new-layout .bio-box {
+    box-shadow: none;
+}
