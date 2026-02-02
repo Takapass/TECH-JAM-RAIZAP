@@ -97,3 +97,8 @@ def profile_view(request):
         'streak_days': 0,
     }
     return render(request, "activities/profile.html", context)
+
+
+@login_required(login_url="login")
+def group_view(request):
+    return render(request, "activities/group.html")
