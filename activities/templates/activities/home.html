@@ -43,16 +43,16 @@
                         </p>
     
                         <div class="actions">
-                            <form method="post" action="{% url 'stamp_skip' %}">
+                            <form method="post" action="{% url 'stamp_skip' %}" id="skipForm">
                                 {% csrf_token %}
-                                <button class="btn sub" {% if not can_stamp %}disabled{% endif %}>
+                                <button id="skipBtn" class="btn sub" {% if not can_stamp %}disabled{% endif %}>
                                     今日はパス
                                 </button>
                             </form>
                         
-                            <form method="post" action="{% url 'stamp_done' %}">
+                            <form method="post" action="{% url 'stamp_done' %}" id="doneForm">
                                 {% csrf_token %}
-                                <button class="btn main" {% if not can_stamp %}disabled{% endif %}>
+                                <button  id="doneBtn" class="btn main" {% if not can_stamp %}disabled{% endif %}>
                                     できた！
                                 </button>
                             </form>
@@ -67,9 +67,15 @@
 
                         <div class="stamps">
                             {% for i in "12345" %}
-                                <span class="stamp {% if forloop.counter <= total_days %}done{% endif %}"></span>
+                                <span class="stamp
+                                    {% if forloop.counter <= done_days %}
+                                        done
+                                    {% elif forloop.counter <= total_days %}
+                                        skip
+                                    {% endif %}
+                                "></span>
                             {% endfor %}
-                        </div>                                                                                         
+                        </div>                                                                                                               
     
                         <p class="stamp-text">
                             あと <strong>5日</strong> でお花が成長するかも！？
@@ -98,70 +104,60 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
-        const doneBtn = document.getElementById("done-btn");
-        const stampSection = document.getElementById("done-stamp");
-    
-        if (doneBtn && stampSection) {
-            doneBtn.addEventListener("click", () => {
-                stampSection.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            });
-        }
-    });
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
         const slider = document.getElementById("cardSlider");
-        const doneBtn = document.getElementById("doneBtn");
     
-        let currentIndex = 0;
+        const doneBtn = document.getElementById("doneBtn");
+        const doneForm = document.getElementById("doneForm");
+    
+        const skipBtn = document.getElementById("skipBtn");
+        const skipForm = document.getElementById("skipForm");
+    
+        let currentIndex = Number(localStorage.getItem("homeSlide")) || 0;
         const maxIndex = 1;
     
         function updateSlide() {
             slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            localStorage.setItem("homeSlide", currentIndex);
         }
     
-        /* ---------- ボタン操作 ---------- */
-        if (doneBtn) {
-            doneBtn.addEventListener("click", () => {
-                currentIndex = 1;
-                updateSlide();
+        updateSlide();
+    
+        function slideAndSubmit(form) {
+            currentIndex = 1;
+            updateSlide();
+            setTimeout(() => form.submit(), 300);
+        }
+    
+        if (doneBtn && doneForm) {
+            doneBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                slideAndSubmit(doneForm);
             });
         }
     
-        /* ---------- スワイプ操作 ---------- */
+        if (skipBtn && skipForm) {
+            skipBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                slideAndSubmit(skipForm);
+            });
+        }
+    
         let startX = 0;
-        let endX = 0;
     
         slider.addEventListener("touchstart", (e) => {
             startX = e.touches[0].clientX;
         });
     
         slider.addEventListener("touchend", (e) => {
-            endX = e.changedTouches[0].clientX;
-            handleSwipe();
-        });
-    
-        function handleSwipe() {
-            const diff = startX - endX;
-    
-            // スワイプ判定（誤操作防止）
+            const diff = startX - e.changedTouches[0].clientX;
             if (Math.abs(diff) < 50) return;
     
-            if (diff > 0 && currentIndex < maxIndex) {
-                // 左スワイプ → 次へ
-                currentIndex++;
-            } else if (diff < 0 && currentIndex > 0) {
-                // 右スワイプ → 前へ
-                currentIndex--;
-            }
+            if (diff > 0 && currentIndex < maxIndex) currentIndex++;
+            if (diff < 0 && currentIndex > 0) currentIndex--;
     
             updateSlide();
-        }
+        });
     });
-</script>    
-
+    </script>    
+    
 {% endblock %}

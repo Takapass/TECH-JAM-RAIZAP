@@ -40,9 +40,15 @@ class Activity(models.Model):
 
 class DailyStamp(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+
+    # 今日押せるか判定用
     last_stamped_date = models.DateField(null=True, blank=True)
     last_skipped_date = models.DateField(null=True, blank=True)
-    total_days = models.IntegerField(default=0)
+
+    # 表示・進行管理用
+    total_days = models.IntegerField(default=0)     # 経過日数
+    done_days = models.IntegerField(default=0)      # できた日数
+    skipped_days = models.IntegerField(default=0)   # パス日数
 
     def can_stamp_today(self):
         today = timezone.localdate()

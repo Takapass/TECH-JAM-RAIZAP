@@ -149,8 +149,9 @@ def home(request):
 
     context = {
         "total_days": stamp.total_days,
+        "done_days": stamp.done_days,
+        "skipped_days": stamp.skipped_days,
         "can_stamp": stamp.can_stamp_today(),
-        "max_stamps": range(5),   # ← ★ ここを追加
     }
     return render(request, "activities/home.html", context)
 
@@ -185,14 +186,15 @@ def idea_view(request):
 
 @login_required
 def stamp_done(request):
-    stamp, created = DailyStamp.objects.get_or_create(user=request.user)
+    stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
     today = timezone.localdate()
 
-    if stamp.last_stamped_date == today:
-        return redirect("home")  # 今日はもう押せない
+    if not stamp.can_stamp_today():
+        return redirect("home")
 
     stamp.last_stamped_date = today
     stamp.total_days += 1
+    stamp.done_days += 1
     stamp.save()
 
     return redirect("home")
@@ -203,11 +205,12 @@ def stamp_skip(request):
     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
     today = timezone.localdate()
 
-    # 今日すでに「できた」or「パス」してたら何もしない
-    if stamp.last_stamped_date == today or stamp.last_skipped_date == today:
+    if not stamp.can_stamp_today():
         return redirect("home")
 
     stamp.last_skipped_date = today
+    stamp.total_days += 1
+    stamp.skipped_days += 1
     stamp.save()
 
     return redirect("home")
