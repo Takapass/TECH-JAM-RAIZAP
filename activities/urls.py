@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import login_view, signup_view, activity_list, home, profile_view, group_view
+from .views import login_view, signup_view, activity_list, home, profile_view, group_view, idea_view
+from . import views
 
 urlpatterns = [
     path("", login_view, name="login"),
@@ -8,4 +9,7 @@ urlpatterns = [
     path('home/', home, name='home'),
     path('profile/', profile_view, name='profile'),
     path('group/', group_view, name='group'),
+    path('idea/', idea_view, name='idea'),
+    path("stamp/", views.stamp_done, name="stamp_done"),
+    path("stamp/skip/", views.stamp_skip, name="stamp_skip"),
 ]

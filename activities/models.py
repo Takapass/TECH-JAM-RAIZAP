@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
 
 
 class Activity(models.Model):
@@ -10,8 +12,41 @@ class Activity(models.Model):
         ('gym','ジムへ行った'),
     ]
 
-    activity_type = models.CharField(max_length=20,choices=ACTIVITY_CHOICES,unique=True)
+    # activity_type = models.CharField(max_length=20,choices=ACTIVITY_CHOICES,unique=True)
+    # is_done = models.BooleanField(default=False)
+    # user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # title = models.CharField(max_length=100)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,        # ★ migration対策
+        blank=True
+    )
+
+    activity_type = models.CharField(
+        max_length=20,
+        choices=ACTIVITY_CHOICES
+    )
+
+    title = models.CharField(
+        max_length=100,
+        default=""        # ★ migration対策
+    )
     is_done = models.BooleanField(default=False)
 
     def __str__(self):
         return self.get_activity_type_display()
+
+
+class DailyStamp(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    last_stamped_date = models.DateField(null=True, blank=True)
+    last_skipped_date = models.DateField(null=True, blank=True)
+    total_days = models.IntegerField(default=0)
+
+    def can_stamp_today(self):
+        today = timezone.localdate()
+        return (
+            self.last_stamped_date != today
+            and self.last_skipped_date != today
+        )
