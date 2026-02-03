@@ -19,31 +19,68 @@
 
         <p class="days">
             お花と過ごして<br>
-            <span>25日</span>
-        </p>
+            <span>{{ total_days }}日</span>
+        </p>        
     </section>
 
     <!-- おすすめアイデア -->
     <section class="recommend">
         <h2>あなたへのおすすめアイデア</h2>
+    
+        <div class="slider">
+            <div class="slider-inner" id="cardSlider">
+    
+                <!-- カード①：おすすめ -->
+                <div class="slide">
+                    <div class="recommend-card">
+                        <div class="recommend-header">
+                            <div class="icon"></div>
+                            <div class="title">健康ガチ勢</div>
+                        </div>
+    
+                        <p class="description">
+                            ～～～～～～～～～～～～～～～～～～
+                        </p>
+    
+                        <div class="actions">
+                            <form method="post" action="{% url 'stamp_skip' %}">
+                                {% csrf_token %}
+                                <button class="btn sub" {% if not can_stamp %}disabled{% endif %}>
+                                    今日はパス
+                                </button>
+                            </form>
+                        
+                            <form method="post" action="{% url 'stamp_done' %}">
+                                {% csrf_token %}
+                                <button class="btn main" {% if not can_stamp %}disabled{% endif %}>
+                                    できた！
+                                </button>
+                            </form>
+                        </div>                       
+                    </div>
+                </div>
+    
+                <!-- カード②：できたスタンプ -->
+                <div class="slide">
+                    <div class="stamp-card">
+                        <h3>できたスタンプ</h3>
 
-        <div class="recommend-card">
-            <div class="recommend-header">
-                <div class="icon"></div>
-                <div class="title">健康ガチ勢</div>
-            </div>
-
-            <p class="description">
-                ～～～～～～～～～～～～～～～～～～
-            </p>
-
-            <div class="actions">
-                <button class="btn sub">今日はパス</button>
-                <button class="btn main">できた！</button>
+                        <div class="stamps">
+                            {% for i in "12345" %}
+                                <span class="stamp {% if forloop.counter <= total_days %}done{% endif %}"></span>
+                            {% endfor %}
+                        </div>                                                                                         
+    
+                        <p class="stamp-text">
+                            あと <strong>5日</strong> でお花が成長するかも！？
+                        </p>
+                    </div>
+                </div>
+    
             </div>
         </div>
     </section>
-
+    
     <!-- 下部カード -->
     <section class="bottom-cards">
         <div class="card">
@@ -58,4 +95,73 @@
     </section>
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const doneBtn = document.getElementById("done-btn");
+        const stampSection = document.getElementById("done-stamp");
+    
+        if (doneBtn && stampSection) {
+            doneBtn.addEventListener("click", () => {
+                stampSection.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            });
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const slider = document.getElementById("cardSlider");
+        const doneBtn = document.getElementById("doneBtn");
+    
+        let currentIndex = 0;
+        const maxIndex = 1;
+    
+        function updateSlide() {
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+    
+        /* ---------- ボタン操作 ---------- */
+        if (doneBtn) {
+            doneBtn.addEventListener("click", () => {
+                currentIndex = 1;
+                updateSlide();
+            });
+        }
+    
+        /* ---------- スワイプ操作 ---------- */
+        let startX = 0;
+        let endX = 0;
+    
+        slider.addEventListener("touchstart", (e) => {
+            startX = e.touches[0].clientX;
+        });
+    
+        slider.addEventListener("touchend", (e) => {
+            endX = e.changedTouches[0].clientX;
+            handleSwipe();
+        });
+    
+        function handleSwipe() {
+            const diff = startX - endX;
+    
+            // スワイプ判定（誤操作防止）
+            if (Math.abs(diff) < 50) return;
+    
+            if (diff > 0 && currentIndex < maxIndex) {
+                // 左スワイプ → 次へ
+                currentIndex++;
+            } else if (diff < 0 && currentIndex > 0) {
+                // 右スワイプ → 前へ
+                currentIndex--;
+            }
+    
+            updateSlide();
+        }
+    });
+</script>    
+
 {% endblock %}
