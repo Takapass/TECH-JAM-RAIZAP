@@ -1,0 +1,86 @@
+{% extends "activities/base.html" %}
+{% load static %}
+
+{% block title %}アイデア{% endblock %}
+{% block page_title %}アイデア{% endblock %}
+{% block hamburger_title %}アイデア{% endblock %}
+
+{% block content %}
+<section class="idea-page">
+
+    <h2 class="idea-title">みんなの健康アイデア</h2>
+
+    <div class="idea-list">
+
+        <!-- アイデアカード -->
+        <article class="idea-card">
+            <div class="idea-header">
+                <div class="idea-user">
+                    <div class="user-icon"></div>
+                    <div>
+                        <p class="user-name">健康ガチ勢</p>
+                        <p class="idea-date">5日前　10時29分</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="idea-body">
+                <div class="idea-text">
+                    <p class="idea-main">
+                        これめっちゃ効果あった！
+                    </p>
+                    <p class="idea-desc">
+                        ～～～～～～～～～～～～～～～～～～<br>
+                        ～～～～～～～～～～～～～～～～～～
+                    </p>
+                </div>
+
+                <div class="idea-image">
+                    写真
+                </div>
+            </div>
+
+            <div class="idea-footer">
+                <span class="like">♡ 12</span>
+                <span class="comment">コメント 3</span>
+            </div>
+        </article>
+
+        <!-- 同じカードを複製すればOK -->
+        <article class="idea-card">
+            <div class="idea-header">
+                <div class="idea-user">
+                    <div class="user-icon"></div>
+                    <div>
+                        <p class="user-name">健康ガチ勢</p>
+                        <p class="idea-date">5日前　10時29分</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="idea-body">
+                <div class="idea-text">
+                    <p class="idea-main">
+                        これめっちゃ効果あった！
+                    </p>
+                    <p class="idea-desc">
+                        ～～～～～～～～～～～～～～～～～～<br>
+                        ～～～～～～～～～～～～～～～～～～
+                    </p>
+                </div>
+
+                <div class="idea-image">
+                    写真
+                </div>
+            </div>
+
+            <div class="idea-footer">
+                <span class="like">♡ 12</span>
+                <span class="comment">コメント 3</span>
+            </div>
+        </article>
+
+    </div>
+
+</section>
+{% endblock %}
