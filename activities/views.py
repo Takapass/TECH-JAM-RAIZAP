@@ -30,11 +30,11 @@ def login_view(request):
             except User.DoesNotExist:
                 user = None
 
-        if user is not None:cat activities/urls.py
-
-            login(request, user)
+        if user is not None:
+            cat activities/urls.py
+        login(request, user)
             return redirect("activity_list")
-        else:
+    else:
             messages.error(
                 request, "＊ユーザー名またはメールアドレスかパスワードが違います"
             )
@@ -297,7 +297,7 @@ def delete_idea(request, idea_id):
         idea.delete()
     return redirect('idea')
         'ideas': ideas
-    })
+})
 
 
 @login_required
