@@ -297,7 +297,6 @@ def delete_idea(request, idea_id):
         idea.delete()
     return redirect('idea')
 
-
 @login_required
 def change_email(request):
     if request.method == 'POST':
