@@ -67,15 +67,17 @@
     display: block;
 }
 
-.days span:nth-child(2),
-.days span:nth-child(3) {
-    display: inline;
-}
-
-.days span:nth-child(2) {
+.days .count {
     font-size: 80px;
     font-weight: bold;
     line-height: 0.8;
+    display: inline;
+}
+
+.days .unit {
+    font-size: 14px;
+    display: inline;
+    margin-left: 4px;
 }
 
 .days .unit {

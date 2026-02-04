@@ -20,7 +20,7 @@
     
         <p class="days">
             お花と過ごして<br>
-            <span>{{ total_days }}日</span>
+            <span class="count">{{ total_days }}</span><span class="unit">日</span>
         </p>
     </section>
     
@@ -46,42 +46,21 @@
                             </p>
         
                             <div class="actions">
-                                <form method="post" action="{% url 'stamp_skip' %}">
+                                <form method="post" action="{% url 'stamp_skip' %}" id="skipForm">
                                     {% csrf_token %}
-                                    <button class="btn sub" {% if not can_stamp %}disabled{% endif %}>
+                                    <button class="btn sub" >
                                         今日はパス
                                     </button>
                                 </form>
                             
-                                <form method="post" action="{% url 'stamp_done' %}">
+                                <form method="post" action="{% url 'stamp_done' %}"id="doneForm">
                                     {% csrf_token %}
-                                    <button class="btn main" {% if not can_stamp %}disabled{% endif %}>
+                                    <button class="btn main" >
                                         できた！
                                     </button>
                                 </form>
                             </div>                       
                         </div>
-    
-                        <p class="description">
-                            ～～～～～～～～～～～～～～～～～～
-                        </p>
-    
-                        <div class="actions">
-                            <form method="post" action="{% url 'stamp_skip' %}" id="skipForm">
-                                {% csrf_token %}
-                                <button id="skipBtn" class="btn sub">
-                                    <!-- {% if not can_stamp %}disabled{% endif %} -->
-                                    今日はパス
-                                </button>
-                            </form>
-                        
-                            <form method="post" action="{% url 'stamp_done' %}" id="doneForm">
-                                {% csrf_token %}
-                                <button  id="doneBtn" class="btn main">
-                                    できた！
-                                </button>
-                            </form>
-                        </div>                       
                     </div>
                 </div>
     
