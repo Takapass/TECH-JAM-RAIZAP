@@ -299,7 +299,6 @@ def delete_idea(request, idea_id):
         'ideas': ideas
     })
 
-
 @login_required
 def change_email(request):
     if request.method == 'POST':
