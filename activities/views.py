@@ -108,18 +108,44 @@ def create_activity(request):
         return redirect("activity_list")
 
 
+
 @login_required
 def home(request):
-    stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
+    user = request.user
+    today = timezone.now().date()
 
-    context = {
-        "total_days": stamp.total_days,
-        "done_days": stamp.done_days,
-        "skipped_days": stamp.skipped_days,
-        "growth_stage": stamp.growth_stage,
-        "can_stamp": stamp.can_stamp_today(),
-    }
-    return render(request, "activities/home.html", context)
+    # ユーザーのスタンプデータを必ず取得
+    stamp, created = DailyStamp.objects.get_or_create(
+        user=user,
+        defaults={
+            "total_days": 0,
+            "done_days": 0,
+            "skipped_days": 0,
+            "growth_stage": 0,
+            "growth_count": 0,
+        }
+    )
+
+    # total_days は保存されている値を使う
+    total_days = stamp.total_days
+
+    # growth_stage をここで必ず再計算
+    if total_days < 5:
+        growth_stage = 0
+    elif total_days < 10:
+        growth_stage = 1
+    else:
+        growth_stage = 2
+
+    # DBにも反映（重要）
+    if stamp.growth_stage != growth_stage:
+        stamp.growth_stage = growth_stage
+        stamp.save(update_fields=["growth_stage"])
+
+    return render(request, "activities/home.html", {
+        "growth_stage": growth_stage,
+        "total_days": total_days,
+    })
 
 
 @login_required(login_url="login")
