@@ -11,11 +11,11 @@
     <!-- 花エリア -->
     <section class="flower-area">
         {% if growth_stage == 0 %}
-            <img src="{% static 'images/seed.png' %}" class="flower-img">
+            <img src="{% static 'activities/images/芽-黄.png' %}" class="flower-img">
         {% elif growth_stage == 1 %}
-            <img src="{% static 'images/bud.png' %}" class="flower-img">
+            <img src="{% static 'activities/images/蕾-黄.png' %}" class="flower-img">
         {% else %}
-            <img src="{% static 'images/flower.png' %}" class="flower-img">
+            <img src="{% static 'activities/images/花-黄.png' %}" class="flower-img">
         {% endif %}
     
         <p class="days">

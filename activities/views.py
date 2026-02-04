@@ -21,25 +21,25 @@ def login_view(request):
         user = authenticate(request, username=login_id, password=password)
 
         if user is None:
-            try:
-                user_obj = User.objects.filter(email=login_id).first()
-                if user_obj:
-                    user = authenticate(
-                        request, username=user_obj.username, password=password
-                    )
-            except User.DoesNotExist:
-                user = None
+            user_obj = User.objects.filter(email=login_id).first()
+            if user_obj:
+                user = authenticate(
+                    request,
+                    username=user_obj.username,
+                    password=password
+                )
 
-        if user is not None:cat activities/urls.py
-
+        if user is not None:
             login(request, user)
             return redirect("activity_list")
         else:
             messages.error(
-                request, "＊ユーザー名またはメールアドレスかパスワードが違います"
+                request,
+                "＊ユーザー名またはメールアドレスかパスワードが違います"
             )
 
     return render(request, "activities/login.html")
+
 
 
 def logout_view(request):
@@ -296,8 +296,6 @@ def delete_idea(request, idea_id):
     if idea.user == request.user:
         idea.delete()
     return redirect('idea')
-        'ideas': ideas
-    })
 
 
 @login_required
