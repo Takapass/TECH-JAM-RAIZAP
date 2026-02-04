@@ -80,6 +80,163 @@
     font-size: 13px;
 }
 
+.idea-image-display {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+/* コメント全体 */
+.idea-comments {
+    margin-top: 8px;
+    padding-left: 12px;
+    border-left: 2px solid #eee;
+}
+
+/* コメント1件 */
+.idea-comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 6px;
+    font-size: 0.85em;
+    color: #555;
+}
+
+/* コメントユーザー名 */
+.comment-user {
+    font-weight: bold;
+    margin-right: 4px;
+}
+
+/* コメント削除ボタン */
+.comment-delete-button {
+    background: transparent;
+    border: none;
+    color: red;
+    font-size: 0.7em;
+    cursor: pointer;
+    margin-left: 6px;
+}
+
+/* コメントテキスト */
+.comment-text {
+    word-break: break-word;
+}
 
 
 
+
+/* 投稿フォーム */
+.idea-post-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.idea-textarea {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.idea-image-input {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 4px;
+}
+
+.idea-post-button {
+    align-self: flex-end;
+    background-color: #ff6b81;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.idea-post-button:hover {
+    background-color: #ff4c61;
+}
+
+.idea-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.idea-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.idea-user {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.user-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #ddd;
+}
+
+.delete-idea-button {
+    background: transparent;
+    border: none;
+    color: #ff4c61;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* アイデア本文 */
+.idea-body {
+    margin-bottom: 8px;
+}
+
+.idea-main {
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.idea-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+/* リアクションボタン */
+.idea-footer {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.reaction-button {
+    background-color: #f2f2f2;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.reaction-button:hover {
+    background-color: #e0e0e0;
+}
