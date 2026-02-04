@@ -13,7 +13,7 @@
 
     <!-- 花エリア -->
     <section class="flower-area">
-        {% if growth_stage == 0 %}
+        <!-- {% if growth_stage == 0 %}
             <img src="{% static 'activities/images/苗-黄.png' %}" class="flower-img">
         {% elif growth_stage == 1 %}
             <img src="{% static 'activities/images/芽-黄.png' %}" class="flower-img">
@@ -21,7 +21,8 @@
             <img src="{% static 'activities/images/蕾-黄.png' %}" class="flower-img">
         {% else %}
             <img src="{% static 'activities/images/花-黄.png' %}" class="flower-img">
-        {% endif %}
+        {% endif %} -->
+        <img src="{% static flower_image %}" class="flower-img">
     
         <p class="days">
             お花と過ごして<br>
@@ -119,69 +120,6 @@
 
 </div>
 
-<!-- <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const slider = document.getElementById("cardSlider");
-    
-        const doneBtn = document.getElementById("doneBtn");
-        const doneForm = document.getElementById("doneForm");
-    
-        const skipBtn = document.getElementById("skipBtn");
-        const skipForm = document.getElementById("skipForm");
-    
-        let currentIndex = Number(localStorage.getItem("homeSlide")) || 0;
-        let currentIndex = 0;
-        const maxIndex = 1;
-    
-        function updateSlide() {
-            slider.style.transform = `translateX(-${currentIndex * 100}%)`; -->
-            <!-- // localStorage.setItem("homeSlide", currentIndex); -->
-        <!-- } -->
-    
-        <!-- updateSlide();
-    
-        // function slideAndSubmit(form) {
-        //     currentIndex = 1;
-        //     updateSlide();
-        //     setTimeout(() => form.submit(), 300);
-        // }
-    
-        if (doneBtn && doneForm) {
-            doneBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                doneBtn.disabled = true;
-                skipBtn.disabled = true;
-                slideAndSubmit(doneForm);
-            });
-        }
-    
-        if (skipBtn && skipForm) {
-            skipBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                doneBtn.disabled = true;
-                skipBtn.disabled = true;
-                slideAndSubmit(skipForm);
-            });
-        }
-    
-        let startX = 0;
-    
-        slider.addEventListener("touchstart", (e) => {
-            startX = e.touches[0].clientX;
-        });
-    
-        slider.addEventListener("touchend", (e) => {
-            const diff = startX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) < 50) return;
-    
-            if (diff > 0 && currentIndex < maxIndex) currentIndex++;
-            if (diff < 0 && currentIndex > 0) currentIndex--;
-    
-            updateSlide();
-        });
-    });
-    </script>     -->
-
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const slider = document.getElementById("cardSlider");
@@ -231,7 +169,7 @@
                     if (data.growth_stage !== undefined) {
                         const img = document.querySelector(".flower-img");
                         img.src = data.image_url;
-                        localStorage.setItem("flowerImage", data.image_url);
+                        // localStorage.setItem("flowerImage", data.image_url);
                     }
                 });
 
