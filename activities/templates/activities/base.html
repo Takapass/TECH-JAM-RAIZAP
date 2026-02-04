@@ -55,7 +55,10 @@
     <ul class="menu-list">
         <li>設定</li>
         <li>設定</li>
-        <a href="{% url 'login' %}" class="logout">ログアウト</a>
+        <form method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout">ログアウト</button>
+        </form>        
     </ul>
         </nav>
 
