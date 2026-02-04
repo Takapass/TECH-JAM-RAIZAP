@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import DailyStamp
+from .models import Idea
 
 
 def login_view(request):
@@ -189,11 +190,6 @@ def group_view(request):
     return render(request, "activities/group.html")
 
 
-@login_required(login_url="login")
-def idea_view(request):
-    return render(request, "activities/idea.html")
-
-
 @login_required
 def stamp_done(request):
     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
@@ -222,3 +218,17 @@ def stamp_skip(request):
     stamp.save()
     return redirect("home")
 
+
+@login_required
+def idea_view(request):
+    if request.method == 'POST':
+        Idea.objects.create(
+            user=request.user,
+            content=request.POST['content']
+        )
+        return redirect('idea')
+
+    ideas = Idea.objects.all().order_by('-created_at')
+    return render(request, 'activities/idea.html', {
+        'ideas': ideas
+    })

@@ -59,12 +59,11 @@ class DailyStamp(models.Model):
             and self.last_skipped_date != today
         )
 
-    # def growth_stage(self):
-    #     """
-    #     0: 苗
-    #     1: 芽が伸びる
-    #     2: 蕾
-    #     3: 花
-    #     """
-    #     stage = self.total_days // 5
-    #     return min(stage, 3)
+
+class Idea(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.content[:20]
