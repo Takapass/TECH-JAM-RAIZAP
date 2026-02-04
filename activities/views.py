@@ -6,7 +6,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
 from .models import DailyStamp
-from .models import Idea
+from .models import Idea, IdeaReaction
+from .forms import IdeaForm
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseForbidden
+
 
 
 def login_view(request):
@@ -26,7 +30,8 @@ def login_view(request):
             except User.DoesNotExist:
                 user = None
 
-        if user is not None:
+        if user is not None:cat activities/urls.py
+
             login(request, user)
             return redirect("activity_list")
         else:
@@ -237,13 +242,94 @@ def stamp_skip(request):
 @login_required
 def idea_view(request):
     if request.method == 'POST':
-        Idea.objects.create(
-            user=request.user,
-            content=request.POST['content']
-        )
-        return redirect('idea')
+        form = IdeaForm(request.POST, request.FILES)
+        if form.is_valid():
+            idea = form.save(commit=False)
+            idea.user = request.user
+            idea.save()
+            return redirect('idea')
+    else:
+        form = IdeaForm()
 
     ideas = Idea.objects.all().order_by('-created_at')
+
+    reactions = [
+        {'type': 'heart', 'emoji': '❤️'},
+        {'type': 'like', 'emoji': '👍'},
+        {'type': 'sad', 'emoji': '😢'},
+    ]
+
+    for idea in ideas:
+        idea.reaction_counts = {}
+        for reaction in reactions:
+            idea.reaction_counts[reaction['type']] = idea.reactions.filter(
+                reaction_type=reaction['type']
+            ).count()
+
     return render(request, 'activities/idea.html', {
+        'ideas': ideas,
+        'form': form,
+        'reactions': reactions,
+    })
+
+@login_required
+def react_idea(request, idea_id, reaction_type):
+    idea = Idea.objects.get(id=idea_id)
+    existing = IdeaReaction.objects.filter(
+        idea=idea,
+        user=request.user,
+        reaction_type=reaction_type
+    )
+    if existing.exists():
+        existing.delete()
+    else:
+        IdeaReaction.objects.create(
+            idea=idea,
+            user=request.user,
+            reaction_type=reaction_type
+        )
+    return redirect('idea')
+
+@login_required
+def delete_idea(request, idea_id):
+    idea = Idea.objects.get(id=idea_id)
+    if idea.user == request.user:
+        idea.delete()
+    return redirect('idea')
         'ideas': ideas
     })
+
+
+@login_required
+def change_email(request):
+    if request.method == 'POST':
+        new_email = request.POST.get('new_email')
+        if new_email:
+            request.user.email = new_email
+            request.user.save()
+            messages.success(request, "メールアドレスが変更されました。")
+            return redirect('profile')
+        else:
+            messages.error(request, "新しいメールアドレスを入力してください。")
+
+    return render(request, 'activities/change_email.html')
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if not request.user.check_password(current_password):
+            messages.error(request, "現在のパスワードが正しくありません。")
+        elif new_password != confirm_password:
+            messages.error(request, "新しいパスワードと確認用パスワードが一致しません。")
+        else:
+            request.user.set_password(new_password)
+            request.user.save()
+            messages.success(request, "パスワードが変更されました。")
+            return redirect('profile')
+
+    return render(request, 'activities/change_password.html')
