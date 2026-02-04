@@ -10,18 +10,20 @@
 
     <!-- 花エリア -->
     <section class="flower-area">
-        <div class="flower">
-            <div class="petals"></div>
-            <div class="center"></div>
-            <div class="stem"></div>
-            <div class="leaves"></div>
-        </div>
-
+        {% if growth_stage == 0 %}
+            <img src="{% static 'images/seed.png' %}" class="flower-img">
+        {% elif growth_stage == 1 %}
+            <img src="{% static 'images/bud.png' %}" class="flower-img">
+        {% else %}
+            <img src="{% static 'images/flower.png' %}" class="flower-img">
+        {% endif %}
+    
         <p class="days">
             お花と過ごして<br>
             <span>{{ total_days }}日</span>
-        </p>        
+        </p>
     </section>
+    
 
     <!-- おすすめアイデア -->
     <section class="recommend">
@@ -43,16 +45,17 @@
                         </p>
     
                         <div class="actions">
-                            <form method="post" action="{% url 'stamp_skip' %}">
+                            <form method="post" action="{% url 'stamp_skip' %}" id="skipForm">
                                 {% csrf_token %}
-                                <button class="btn sub" {% if not can_stamp %}disabled{% endif %}>
+                                <button id="skipBtn" class="btn sub">
+                                    <!-- {% if not can_stamp %}disabled{% endif %} -->
                                     今日はパス
                                 </button>
                             </form>
                         
-                            <form method="post" action="{% url 'stamp_done' %}">
+                            <form method="post" action="{% url 'stamp_done' %}" id="doneForm">
                                 {% csrf_token %}
-                                <button class="btn main" {% if not can_stamp %}disabled{% endif %}>
+                                <button  id="doneBtn" class="btn main">
                                     できた！
                                 </button>
                             </form>
@@ -67,13 +70,26 @@
 
                         <div class="stamps">
                             {% for i in "12345" %}
-                                <span class="stamp {% if forloop.counter <= total_days %}done{% endif %}"></span>
+                                <span class="stamp
+                                    {% if forloop.counter <= done_days %}
+                                        done
+                                    {% elif forloop.counter <= total_days %}
+                                        skip
+                                    {% endif %}
+                                "></span>
                             {% endfor %}
-                        </div>                                                                                         
+                        </div>                                                                                                               
     
                         <p class="stamp-text">
                             あと <strong>5日</strong> でお花が成長するかも！？
                         </p>
+                        <!-- <p class="stamp-text">
+                            {% if next_stage_days == 0 %}
+                                🎉 お花が成長しました！
+                            {% else %}
+                                あと <strong>{{ next_stage_days }}日</strong> でお花が成長するかも！？
+                            {% endif %}
+                        </p>                         -->
                     </div>
                 </div>
     
@@ -96,72 +112,135 @@
 
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const doneBtn = document.getElementById("done-btn");
-        const stampSection = document.getElementById("done-stamp");
-    
-        if (doneBtn && stampSection) {
-            doneBtn.addEventListener("click", () => {
-                stampSection.scrollIntoView({
-                    behavior: "smooth",
-                    block: "start"
-                });
-            });
-        }
-    });
-</script>
-
-<script>
+<!-- <script>
     document.addEventListener("DOMContentLoaded", () => {
         const slider = document.getElementById("cardSlider");
-        const doneBtn = document.getElementById("doneBtn");
     
+        const doneBtn = document.getElementById("doneBtn");
+        const doneForm = document.getElementById("doneForm");
+    
+        const skipBtn = document.getElementById("skipBtn");
+        const skipForm = document.getElementById("skipForm");
+    
+        let currentIndex = Number(localStorage.getItem("homeSlide")) || 0;
         let currentIndex = 0;
         const maxIndex = 1;
     
         function updateSlide() {
-            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-        }
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`; -->
+            <!-- // localStorage.setItem("homeSlide", currentIndex); -->
+        <!-- } -->
     
-        /* ---------- ボタン操作 ---------- */
-        if (doneBtn) {
-            doneBtn.addEventListener("click", () => {
-                currentIndex = 1;
-                updateSlide();
+        <!-- updateSlide();
+    
+        // function slideAndSubmit(form) {
+        //     currentIndex = 1;
+        //     updateSlide();
+        //     setTimeout(() => form.submit(), 300);
+        // }
+    
+        if (doneBtn && doneForm) {
+            doneBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                doneBtn.disabled = true;
+                skipBtn.disabled = true;
+                slideAndSubmit(doneForm);
             });
         }
     
-        /* ---------- スワイプ操作 ---------- */
+        if (skipBtn && skipForm) {
+            skipBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                doneBtn.disabled = true;
+                skipBtn.disabled = true;
+                slideAndSubmit(skipForm);
+            });
+        }
+    
         let startX = 0;
-        let endX = 0;
     
         slider.addEventListener("touchstart", (e) => {
             startX = e.touches[0].clientX;
         });
     
         slider.addEventListener("touchend", (e) => {
-            endX = e.changedTouches[0].clientX;
-            handleSwipe();
-        });
-    
-        function handleSwipe() {
-            const diff = startX - endX;
-    
-            // スワイプ判定（誤操作防止）
+            const diff = startX - e.changedTouches[0].clientX;
             if (Math.abs(diff) < 50) return;
     
-            if (diff > 0 && currentIndex < maxIndex) {
-                // 左スワイプ → 次へ
-                currentIndex++;
-            } else if (diff < 0 && currentIndex > 0) {
-                // 右スワイプ → 前へ
-                currentIndex--;
-            }
+            if (diff > 0 && currentIndex < maxIndex) currentIndex++;
+            if (diff < 0 && currentIndex > 0) currentIndex--;
     
             updateSlide();
-        }
+        });
     });
-</script>    
+    </script>     -->
 
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const slider = document.getElementById("cardSlider");
+            const doneBtn = document.getElementById("doneBtn");
+            const skipBtn = document.getElementById("skipBtn");
+        
+            let currentIndex = 0;
+            const maxIndex = 1;
+        
+            function updateSlide() {
+                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+        
+            function getCSRFToken() {
+                return document.querySelector('[name=csrfmiddlewaretoken]').value;
+            }
+        
+            function submitStamp(url) {
+                doneBtn.disabled = true;
+                skipBtn.disabled = true;
+        
+                // カード②へ
+                currentIndex = 1;
+                updateSlide();
+        
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": getCSRFToken(),
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) return;
+        
+                    // 1枚目の数字を即更新
+                    document.querySelector(".days span").textContent =
+                        data.total_days + "日";
+                });
+            }
+        
+            doneBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                submitStamp("{% url 'stamp_done' %}");
+            });
+        
+            skipBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                submitStamp("{% url 'stamp_skip' %}");
+            });
+        
+            // スワイプ
+            let startX = 0;
+            slider.addEventListener("touchstart", (e) => {
+                startX = e.touches[0].clientX;
+            });
+        
+            slider.addEventListener("touchend", (e) => {
+                const diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) < 50) return;
+                if (diff > 0 && currentIndex < maxIndex) currentIndex++;
+                if (diff < 0 && currentIndex > 0) currentIndex--;
+                updateSlide();
+            });
+        });
+        </script>
+        
 {% endblock %}
