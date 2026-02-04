@@ -12,4 +12,6 @@ urlpatterns = [
     path('ideas/', idea_view, name='idea'),
     path("stamp/", views.stamp_done, name="stamp_done"),
     path("stamp/skip/", views.stamp_skip, name="stamp_skip"),
+    path("change_email/", views.change_email, name="change_email"),
+    path("change_password/", views.change_password, name="change_password"),
 ]

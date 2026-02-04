@@ -37,17 +37,18 @@
     </div>
 
     <div class="settings-list">
-        <a href="#" class="settings-item email-change">
+        <a href="{% url 'change_email' %}" class="settings-item email-change">
             <span class="item-icon"></span>
             <span class="item-text">メールアドレス変更</span>
         </a>
         <div class="divider"></div>
-        <a href="#" class="settings-item change-password">
+        <a href="{% url 'change_password' %}" class="settings-item change-password">
             <span class="item-icon"></span>
             <span class="item-text">パスワード変更</span>
         </a>
+
         <div class="divider"></div>
-        <a href="{% url 'login' %}" class="settings-item logout-link">
+        <a href="{% url 'login' %}" class="settings-item">
             <span class="item-icon"></span>
             <span class="item-text">ログアウト</span>
         </a>
@@ -55,7 +56,7 @@
 
 </div>
 
-<script>
+<!-- <script>
     // 安全にイベントを登録（要素が存在する場合のみ）
     const editIcon = document.querySelector('.icon-edit');
     if (editIcon) {
@@ -80,5 +81,5 @@
             alert('メールアドレス変更機能は近日公開予定です');
         });
     }
-</script>
+</script> -->
 {% endblock %}

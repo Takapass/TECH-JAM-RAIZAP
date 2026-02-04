@@ -247,3 +247,38 @@ def idea_view(request):
     return render(request, 'activities/idea.html', {
         'ideas': ideas
     })
+
+
+@login_required
+def change_email(request):
+    if request.method == 'POST':
+        new_email = request.POST.get('new_email')
+        if new_email:
+            request.user.email = new_email
+            request.user.save()
+            messages.success(request, "メールアドレスが変更されました。")
+            return redirect('profile')
+        else:
+            messages.error(request, "新しいメールアドレスを入力してください。")
+
+    return render(request, 'activities/change_email.html')
+
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if not request.user.check_password(current_password):
+            messages.error(request, "現在のパスワードが正しくありません。")
+        elif new_password != confirm_password:
+            messages.error(request, "新しいパスワードと確認用パスワードが一致しません。")
+        else:
+            request.user.set_password(new_password)
+            request.user.save()
+            messages.success(request, "パスワードが変更されました。")
+            return redirect('profile')
+
+    return render(request, 'activities/change_password.html')
