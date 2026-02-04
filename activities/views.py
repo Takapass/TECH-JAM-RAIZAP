@@ -144,6 +144,15 @@ def create_activity(request):
         return redirect("activity_list")
 
 
+# @login_required
+# def home(request):
+    # stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
+
+    # next_stage_days = 5 - (stamp.total_days % 5)
+    # if next_stage_days == 5:
+    #     next_stage_days = 0
+
+
 @login_required
 def home(request):
     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
@@ -152,7 +161,7 @@ def home(request):
         "total_days": stamp.total_days,
         "done_days": stamp.done_days,
         "skipped_days": stamp.skipped_days,
-        "can_stamp": stamp.can_stamp_today(),
+        "growth_stage": stamp.growth_stage,
     }
     return render(request, "activities/home.html", context)
 
@@ -188,30 +197,28 @@ def idea_view(request):
 @login_required
 def stamp_done(request):
     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
-    today = timezone.localdate()
 
-    if not stamp.can_stamp_today():
-        return redirect("home")
-
-    stamp.last_stamped_date = today
     stamp.total_days += 1
     stamp.done_days += 1
-    stamp.save()
+    stamp.growth_count += 1
 
+    # 成長条件（例：5回で成長）
+    if stamp.growth_count >= 5:
+        stamp.growth_stage = min(stamp.growth_stage + 1, 2)
+        stamp.growth_count = 0
+
+    stamp.save()
     return redirect("home")
 
 
 @login_required
 def stamp_skip(request):
     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
-    today = timezone.localdate()
 
-    if not stamp.can_stamp_today():
-        return redirect("home")
-
-    stamp.last_skipped_date = today
     stamp.total_days += 1
     stamp.skipped_days += 1
-    stamp.save()
+    # growth_count は増やさない
 
+    stamp.save()
     return redirect("home")
+

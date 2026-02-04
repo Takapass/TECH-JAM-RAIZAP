@@ -49,6 +49,8 @@ class DailyStamp(models.Model):
     total_days = models.IntegerField(default=0)     # 経過日数
     done_days = models.IntegerField(default=0)      # できた日数
     skipped_days = models.IntegerField(default=0)   # パス日数
+    growth_stage = models.IntegerField(default=0)  # 0=苗,1=蕾,2=花
+    growth_count = models.IntegerField(default=0)  # 成長用カウント
 
     def can_stamp_today(self):
         today = timezone.localdate()
@@ -56,3 +58,13 @@ class DailyStamp(models.Model):
             self.last_stamped_date != today
             and self.last_skipped_date != today
         )
+
+    # def growth_stage(self):
+    #     """
+    #     0: 苗
+    #     1: 芽が伸びる
+    #     2: 蕾
+    #     3: 花
+    #     """
+    #     stage = self.total_days // 5
+    #     return min(stage, 3)

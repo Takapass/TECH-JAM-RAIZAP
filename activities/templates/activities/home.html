@@ -10,18 +10,20 @@
 
     <!-- 花エリア -->
     <section class="flower-area">
-        <div class="flower">
-            <div class="petals"></div>
-            <div class="center"></div>
-            <div class="stem"></div>
-            <div class="leaves"></div>
-        </div>
-
+        {% if growth_stage == 0 %}
+            <img src="{% static 'images/seed.png' %}" class="flower-img">
+        {% elif growth_stage == 1 %}
+            <img src="{% static 'images/bud.png' %}" class="flower-img">
+        {% else %}
+            <img src="{% static 'images/flower.png' %}" class="flower-img">
+        {% endif %}
+    
         <p class="days">
             お花と過ごして<br>
             <span>{{ total_days }}日</span>
-        </p>        
+        </p>
     </section>
+    
 
     <!-- おすすめアイデア -->
     <section class="recommend">
@@ -80,6 +82,13 @@
                         <p class="stamp-text">
                             あと <strong>5日</strong> でお花が成長するかも！？
                         </p>
+                        <!-- <p class="stamp-text">
+                            {% if next_stage_days == 0 %}
+                                🎉 お花が成長しました！
+                            {% else %}
+                                あと <strong>{{ next_stage_days }}日</strong> でお花が成長するかも！？
+                            {% endif %}
+                        </p>                         -->
                     </div>
                 </div>
     
