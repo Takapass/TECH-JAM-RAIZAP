@@ -11,3 +11,4 @@ db.sqlite3
 echo "__pycache__/" >> .gitignore
 echo "*.pyc" >> .gitignore
 git add .gitignore
+db.sqlite3

@@ -12,7 +12,7 @@
 
     {# ===== 投稿フォーム ===== #}
     {% if user.is_authenticated %}
-    <form method="post" class="idea-post-form">
+    <form method="post" class="idea-post-form" enctype="multipart/form-data">
         {% csrf_token %}
         <textarea
             name="content"
@@ -20,9 +20,8 @@
             placeholder="今の健康アイデアを投稿"
             required
         ></textarea>
-        <button type="submit" class="idea-post-button">
-            投稿
-        </button>
+        <input type="file" name="image" accept="image/*" class="idea-image-input">
+        <button type="submit" class="idea-post-button">投稿</button>
     </form>
     {% else %}
         <p>投稿するにはログインしてください</p>
@@ -38,27 +37,43 @@
                 <div class="idea-user">
                     <div class="user-icon"></div>
                     <div>
-                        <p class="user-name">
-                            {{ idea.user.username }}
-                        </p>
-                        <p class="idea-date">
-                            {{ idea.created_at|date:"n/j H:i" }}
-                        </p>
+                        <p class="user-name">{{ idea.user.username }}</p>
+                        <p class="idea-date">{{ idea.created_at|date:"n/j H:i" }}</p>
                     </div>
                 </div>
+                {% if idea.user == user %}
+                    <form method="post" action="{% url 'delete_idea' idea.id %}" class="delete-idea-form">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-idea-button">×</button>
+                    </form>
+                {% endif %}
             </div>
 
             <div class="idea-body">
                 <div class="idea-text">
-                    <p class="idea-main">
-                        {{ idea.content }}
-                    </p>
+                    <p class="idea-main">{{ idea.content }}</p>
                 </div>
+                {% if idea.image %}
+                <div class="idea-image">
+                    <img src="{{ idea.image.url }}" alt="Idea Image" style="max-width: 100%; height: auto; border-radius: 8px;">
+                </div>
+                {% endif %}
             </div>
 
             <div class="idea-footer">
-                <span class="like">♡</span>
-                <span class="comment">コメント</span>
+                {# リアクションボタン ♡ 👍 😢 #}
+                <form method="post" action="{% url 'react_idea' idea.id 'heart' %}" class="reaction-form">
+                    {% csrf_token %}
+                    <button type="submit" class="reaction-button">❤️ {{ idea.reaction_counts.heart|default:0 }}</button>
+                </form>
+                <form method="post" action="{% url 'react_idea' idea.id 'like' %}" class="reaction-form">
+                    {% csrf_token %}
+                    <button type="submit" class="reaction-button">👍 {{ idea.reaction_counts.like|default:0 }}</button>
+                </form>
+                <form method="post" action="{% url 'react_idea' idea.id 'sad' %}" class="reaction-form">
+                    {% csrf_token %}
+                    <button type="submit" class="reaction-button">😢 {{ idea.reaction_counts.sad|default:0 }}</button>
+                </form>
             </div>
 
         </article>
