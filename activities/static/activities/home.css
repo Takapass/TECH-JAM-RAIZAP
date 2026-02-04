@@ -18,65 +18,6 @@
     margin: 30px auto 8px;
 }
 
-/* ===== 花の成長段階 ===== */
-
-/* 苗 */
-/* .stage-0 .petals {
-    display: none;
-}
-
-.stage-0 .center {
-    display: none;
-}
-
-.stage-0 .stem {
-    height: 20px;
-}
-
-.stage-0 .leaves {
-    width: 30px;
-} */
-
-/* 芽が伸びる */
-/* .stage-1 .petals {
-    display: none;
-}
-
-.stage-1 .center {
-    display: none;
-}
-
-.stage-1 .stem {
-    height: 40px;
-}
-
-.stage-1 .leaves {
-    width: 50px;
-} */
-
-/* 蕾 */
-/* .stage-2 .petals {
-    width: 40px;
-    height: 40px;
-    background: #cfcfcf;
-    margin: 0 auto;
-}
-
-.stage-2 .center {
-    display: none;
-}
- */
-/* 花が咲く */
-/* .stage-3 .petals {
-    width: 160px;
-    height: 160px;
-    background: #ffdcdc;
-}
-
-.stage-3 .center {
-    display: block;
-} */
-
 .petals {
     width: 160px;
     height: 160px;

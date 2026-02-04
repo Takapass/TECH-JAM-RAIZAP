@@ -42,28 +42,6 @@ def logout_view(request):
     return redirect("login")
 
 
-# def signup_view(request):
-#     if request.method == "POST":
-#         username = request.POST.get("username")
-#         email = request.POST.get("email")
-#         password = request.POST.get("password")
-
-#         if not username or not password:
-#             messages.error(request, "＊ユーザー名とパスワードを入力してください")
-#             return render(request, "activities/signup.html")
-
-#         if User.objects.filter(username=username).exists():
-#             messages.error(request, "＊このユーザー名はすでに使われています")
-#             return render(request, "activities/signup.html")
-
-#         User.objects.create_user(username=username, email=email, password=password)
-
-#         messages.success(request, "登録が完了しました。ログインしてください")
-#         return redirect("login")
-
-#     return render(request, "activities/signup.html")
-
-
 def signup_view(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -99,24 +77,6 @@ def signup_view(request):
     return render(request, "activities/signup.html")
 
 
-# def activity_list(request):
-#     if request.method == "POST":
-#         for activity in Activity.objects.all():
-#             if str(activity.id) in request.POST:
-#                 activity.is_done = True
-#                 activity.save()
-
-#         messages.success(request, "保存しました！")
-
-#         Activity.objects.update(is_done=False)
-
-#         return redirect("activity_list")  # POST後はリダイレクト（OK）
-
-#     # activities = Activity.objects.all()
-#     activities = Activity.objects.filter(user=request.user)
-#     return render(request, "activities/home.html", {"activities": activities})
-
-
 @login_required
 def activity_list(request):
     activities = Activity.objects.filter(user=request.user)
@@ -145,15 +105,6 @@ def create_activity(request):
         return redirect("activity_list")
 
 
-# @login_required
-# def home(request):
-    # stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
-
-    # next_stage_days = 5 - (stamp.total_days % 5)
-    # if next_stage_days == 5:
-    #     next_stage_days = 0
-
-
 @login_required
 def home(request):
     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
@@ -163,6 +114,7 @@ def home(request):
         "done_days": stamp.done_days,
         "skipped_days": stamp.skipped_days,
         "growth_stage": stamp.growth_stage,
+        "can_stamp": stamp.can_stamp_today(),
     }
     return render(request, "activities/home.html", context)
 
@@ -180,7 +132,7 @@ def profile_view(request):
         "completed_count": completed_count,
         'total_activities': total_activities,
         # 当面は0を返す。将来的にユーザーの連続日数ロジックに置き換える
-        'streak_days': 0,
+        'streak_days': 1,
     }
     return render(request, "activities/profile.html", context)
 
@@ -190,33 +142,96 @@ def group_view(request):
     return render(request, "activities/group.html")
 
 
+# @login_required
+# def stamp_done(request):
+#     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
+
+#     if not stamp.can_stamp_today():
+#         return redirect("home")
+
+#     today = timezone.localdate()
+
+#     stamp.last_stamped_date = today
+#     stamp.total_days += 1
+#     stamp.done_days += 1
+#     stamp.growth_count += 1
+
+#     if stamp.growth_count >= 5:
+#         stamp.growth_stage = min(stamp.growth_stage + 1, 2)
+#         stamp.growth_count = 0
+
+#     stamp.save()
+#     return redirect("home")
+
+
+# @login_required
+# def stamp_skip(request):
+#     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
+
+#     if not stamp.can_stamp_today():
+#         return redirect("home")
+
+#     today = timezone.localdate()
+
+#     stamp.last_skipped_date = today
+#     stamp.total_days += 1
+#     stamp.skipped_days += 1
+
+#     stamp.save()
+#     return redirect("home")
+
+
 @login_required
 def stamp_done(request):
-    stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
+    if request.method != "POST":
+        return JsonResponse({"error": "invalid"}, status=400)
 
+    stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
+    today = timezone.localdate()
+
+    if not stamp.can_stamp_today():
+        return JsonResponse({"error": "already"}, status=400)
+
+    stamp.last_stamped_date = today
     stamp.total_days += 1
     stamp.done_days += 1
     stamp.growth_count += 1
 
-    # 成長条件（例：5回で成長）
     if stamp.growth_count >= 5:
         stamp.growth_stage = min(stamp.growth_stage + 1, 2)
         stamp.growth_count = 0
 
     stamp.save()
-    return redirect("home")
+
+    return JsonResponse({
+        "total_days": stamp.total_days,
+        "done_days": stamp.done_days,
+        "growth_stage": stamp.growth_stage,
+    })
 
 
 @login_required
 def stamp_skip(request):
-    stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
+    if request.method != "POST":
+        return JsonResponse({"error": "invalid"}, status=400)
 
+    stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
+    today = timezone.localdate()
+
+    if not stamp.can_stamp_today():
+        return JsonResponse({"error": "already"}, status=400)
+
+    stamp.last_skipped_date = today
     stamp.total_days += 1
     stamp.skipped_days += 1
-    # growth_count は増やさない
 
     stamp.save()
-    return redirect("home")
+
+    return JsonResponse({
+        "total_days": stamp.total_days,
+        "done_days": stamp.done_days,
+        "growth_stage": stamp.growth_stage,
+    })
 
 
 @login_required

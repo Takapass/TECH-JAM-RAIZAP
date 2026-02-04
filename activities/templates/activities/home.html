@@ -47,14 +47,15 @@
                         <div class="actions">
                             <form method="post" action="{% url 'stamp_skip' %}" id="skipForm">
                                 {% csrf_token %}
-                                <button id="skipBtn" class="btn sub" {% if not can_stamp %}disabled{% endif %}>
+                                <button id="skipBtn" class="btn sub">
+                                    <!-- {% if not can_stamp %}disabled{% endif %} -->
                                     今日はパス
                                 </button>
                             </form>
                         
                             <form method="post" action="{% url 'stamp_done' %}" id="doneForm">
                                 {% csrf_token %}
-                                <button  id="doneBtn" class="btn main" {% if not can_stamp %}disabled{% endif %}>
+                                <button  id="doneBtn" class="btn main">
                                     できた！
                                 </button>
                             </form>
@@ -111,7 +112,7 @@
 
 </div>
 
-<script>
+<!-- <script>
     document.addEventListener("DOMContentLoaded", () => {
         const slider = document.getElementById("cardSlider");
     
@@ -122,24 +123,27 @@
         const skipForm = document.getElementById("skipForm");
     
         let currentIndex = Number(localStorage.getItem("homeSlide")) || 0;
+        let currentIndex = 0;
         const maxIndex = 1;
     
         function updateSlide() {
-            slider.style.transform = `translateX(-${currentIndex * 100}%)`;
-            localStorage.setItem("homeSlide", currentIndex);
-        }
+            slider.style.transform = `translateX(-${currentIndex * 100}%)`; -->
+            <!-- // localStorage.setItem("homeSlide", currentIndex); -->
+        <!-- } -->
     
-        updateSlide();
+        <!-- updateSlide();
     
-        function slideAndSubmit(form) {
-            currentIndex = 1;
-            updateSlide();
-            setTimeout(() => form.submit(), 300);
-        }
+        // function slideAndSubmit(form) {
+        //     currentIndex = 1;
+        //     updateSlide();
+        //     setTimeout(() => form.submit(), 300);
+        // }
     
         if (doneBtn && doneForm) {
             doneBtn.addEventListener("click", (e) => {
                 e.preventDefault();
+                doneBtn.disabled = true;
+                skipBtn.disabled = true;
                 slideAndSubmit(doneForm);
             });
         }
@@ -147,6 +151,8 @@
         if (skipBtn && skipForm) {
             skipBtn.addEventListener("click", (e) => {
                 e.preventDefault();
+                doneBtn.disabled = true;
+                skipBtn.disabled = true;
                 slideAndSubmit(skipForm);
             });
         }
@@ -167,6 +173,74 @@
             updateSlide();
         });
     });
-    </script>    
-    
+    </script>     -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const slider = document.getElementById("cardSlider");
+            const doneBtn = document.getElementById("doneBtn");
+            const skipBtn = document.getElementById("skipBtn");
+        
+            let currentIndex = 0;
+            const maxIndex = 1;
+        
+            function updateSlide() {
+                slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+        
+            function getCSRFToken() {
+                return document.querySelector('[name=csrfmiddlewaretoken]').value;
+            }
+        
+            function submitStamp(url) {
+                doneBtn.disabled = true;
+                skipBtn.disabled = true;
+        
+                // カード②へ
+                currentIndex = 1;
+                updateSlide();
+        
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": getCSRFToken(),
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) return;
+        
+                    // 1枚目の数字を即更新
+                    document.querySelector(".days span").textContent =
+                        data.total_days + "日";
+                });
+            }
+        
+            doneBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                submitStamp("{% url 'stamp_done' %}");
+            });
+        
+            skipBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                submitStamp("{% url 'stamp_skip' %}");
+            });
+        
+            // スワイプ
+            let startX = 0;
+            slider.addEventListener("touchstart", (e) => {
+                startX = e.touches[0].clientX;
+            });
+        
+            slider.addEventListener("touchend", (e) => {
+                const diff = startX - e.changedTouches[0].clientX;
+                if (Math.abs(diff) < 50) return;
+                if (diff > 0 && currentIndex < maxIndex) currentIndex++;
+                if (diff < 0 && currentIndex > 0) currentIndex--;
+                updateSlide();
+            });
+        });
+        </script>
+        
 {% endblock %}
