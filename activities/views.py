@@ -9,8 +9,7 @@ from .models import DailyStamp
 from .models import Idea, IdeaReaction
 from .forms import IdeaForm
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponseForbidden
-
+from django.http import HttpResponseForbidden, JsonResponse
 
 
 def login_view(request):
@@ -39,7 +38,6 @@ def login_view(request):
             )
 
     return render(request, "activities/login.html")
-
 
 
 def logout_view(request):
@@ -272,6 +270,7 @@ def idea_view(request):
         'reactions': reactions,
     })
 
+
 @login_required
 def react_idea(request, idea_id, reaction_type):
     idea = Idea.objects.get(id=idea_id)
@@ -289,6 +288,7 @@ def react_idea(request, idea_id, reaction_type):
             reaction_type=reaction_type
         )
     return redirect('idea')
+
 
 @login_required
 def delete_idea(request, idea_id):

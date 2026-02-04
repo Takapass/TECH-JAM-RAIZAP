@@ -11,8 +11,10 @@
     <!-- 花エリア -->
     <section class="flower-area">
         {% if growth_stage == 0 %}
-            <img src="{% static 'activities/images/芽-黄.png' %}" class="flower-img">
+            <img src="{% static 'activities/images/苗-黄.png' %}" class="flower-img">
         {% elif growth_stage == 1 %}
+            <img src="{% static 'activities/images/芽-黄.png' %}" class="flower-img">
+        {% elif growth_stage == 2 %}
             <img src="{% static 'activities/images/蕾-黄.png' %}" class="flower-img">
         {% else %}
             <img src="{% static 'activities/images/花-黄.png' %}" class="flower-img">
@@ -208,13 +210,26 @@
                     },
                 })
                 .then(res => res.json())
-                .then(data => {
-                    if (data.error) return;
+                //.then(data => {
+                  //  if (data.error) return;
         
                     // 1枚目の数字を即更新
+                   // document.querySelector(".days span").textContent =
+                     //   data.total_days + "日";
+                //});
+                .then(data => {
+                    if (data.error) return;
+                    // 日数更新
                     document.querySelector(".days span").textContent =
-                        data.total_days + "日";
+                    data.total_days + "日";
+                    // 成長したときだけ画像更新
+                    if (data.growth_stage !== undefined) {
+                        const img = document.querySelector(".flower-img");
+                        img.src = data.image_url;
+                        localStorage.setItem("flowerImage", data.image_url);
+                    }
                 });
+
             }
         
             doneBtn.addEventListener("click", (e) => {
