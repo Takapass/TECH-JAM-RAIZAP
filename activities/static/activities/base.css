@@ -8,7 +8,6 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
                  "Segoe UI", "Noto Sans JP", sans-serif;
-    background-color: #f5f5f5;
     color: #333;
     font-family: "Zen Maru Gothic", sans-serif;
     font-weight: 400;
@@ -60,6 +59,7 @@ body {
 .main {
     flex: 1;
     padding: 16px;
+    background-color: #f3ffed;
 }
 
 /* Django messages */

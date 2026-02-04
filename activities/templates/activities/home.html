@@ -33,31 +33,33 @@
     
                 <!-- カード①：おすすめ -->
                 <div class="slide">
-                    <div class="recommend-card">
-                        <div class="recommend-header">
-                            <div class="icon"></div>
-                            <div class="title">健康ガチ勢</div>
+                    <div class="recommend-card-wrapper">
+                        <div class="recommend-card">
+                            <div class="recommend-header">
+                                <div class="icon"></div>
+                                <div class="title">健康ガチ勢</div>
+                            </div>
+        
+                            <p class="description">
+                                ～～～～～～～～～～～～～～～～～～
+                            </p>
+        
+                            <div class="actions">
+                                <form method="post" action="{% url 'stamp_skip' %}">
+                                    {% csrf_token %}
+                                    <button class="btn sub" {% if not can_stamp %}disabled{% endif %}>
+                                        今日はパス
+                                    </button>
+                                </form>
+                            
+                                <form method="post" action="{% url 'stamp_done' %}">
+                                    {% csrf_token %}
+                                    <button class="btn main" {% if not can_stamp %}disabled{% endif %}>
+                                        できた！
+                                    </button>
+                                </form>
+                            </div>                       
                         </div>
-    
-                        <p class="description">
-                            ～～～～～～～～～～～～～～～～～～
-                        </p>
-    
-                        <div class="actions">
-                            <form method="post" action="{% url 'stamp_skip' %}">
-                                {% csrf_token %}
-                                <button class="btn sub" {% if not can_stamp %}disabled{% endif %}>
-                                    今日はパス
-                                </button>
-                            </form>
-                        
-                            <form method="post" action="{% url 'stamp_done' %}">
-                                {% csrf_token %}
-                                <button class="btn main" {% if not can_stamp %}disabled{% endif %}>
-                                    できた！
-                                </button>
-                            </form>
-                        </div>                       
                     </div>
                 </div>
     
