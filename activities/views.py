@@ -297,7 +297,6 @@ def delete_idea(request, idea_id):
         idea.delete()
     return redirect('idea')
         'ideas': ideas
-    })
 
 
 @login_required
