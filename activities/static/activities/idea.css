@@ -1,9 +1,20 @@
+.idea-page {
+  padding: 0 18rem;
+}
+
 /* ページタイトル */
 .idea-page-title {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 16px;
 }
+
+.idea-title {
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 
 /* 投稿一覧 */
 .idea-list {
@@ -58,8 +69,8 @@
 /* 写真 */
 .idea-body {
     display: flex;
-    justify-content: flex-end;
     margin-top: 12px;
+    justify-content: space-between;
 }
 
 .idea-image {
@@ -69,7 +80,6 @@
     border-radius: 8px;
     display: flex;
     align-items: center;
-    justify-content: center;
 }
 
 /* フッター */
@@ -152,11 +162,29 @@
     padding: 4px;
 }
 
+.idea-image-input::file-selector-button {
+    background-color: #4ECF34; 
+    color: white;
+    border: 1px solid #4ECF34;  
+    border-radius: 3px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+    transition: color 0.3s;
+}
+
+/* ホバー */
+.idea-image-input::file-selector-button:hover {
+    background-color: #ffffff;
+    color: #4ECF34;
+}
+
 .idea-post-button {
     align-self: flex-end;
-    background-color: #ff6b81;
+    background-color: #4ECF34;
     color: white;
-    border: none;
+    border: 1px solid #4ECF34;
     border-radius: 6px;
     padding: 6px 12px;
     cursor: pointer;
@@ -164,7 +192,8 @@
 }
 
 .idea-post-button:hover {
-    background-color: #ff4c61;
+    background-color: #ffffff;
+    color: #4ECF34;
 }
 
 .idea-card {
@@ -239,4 +268,10 @@
 
 .reaction-button:hover {
     background-color: #e0e0e0;
+}
+
+@media screen and (max-width: 768px) {
+  .idea-page {
+  padding: 0;
+}
 }
