@@ -79,9 +79,10 @@
 }
 
 .recommend-card {
-    background: #e0e0e0;
+    background: #F3FFE8;
     border-radius: 16px;
     padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .recommend-header {
@@ -97,9 +98,7 @@
     border-radius: 50%;
 }
 
-.title {
-    font-weight: bold;
-}
+
 
 .description {
     margin: 8px 0;
@@ -150,14 +149,17 @@
 .bottom-cards {
     display: flex;
     gap: 12px;
+    
+
 }
 
 .card {
     flex: 1;
-    background: #e0e0e0;
     border-radius: 12px;
     padding: 12px;
     font-size: 12px;
+    background: #F3FFE8;
+box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* ===== 横スライダー ===== */
@@ -176,6 +178,7 @@
 .slide {
     width: 100%;
     flex-shrink: 0;
+    padding: 8px 0;
 }
 
 /* できたスタンプカード */
