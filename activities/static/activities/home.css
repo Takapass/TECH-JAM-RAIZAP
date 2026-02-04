@@ -193,6 +193,10 @@
     background: #ff5c5c;
 }
 
+.stamp.skip {
+    background: #bbb;
+}
+
 /* 押せないボタン */
 button:disabled {
     background: #ccc;
