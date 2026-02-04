@@ -9,6 +9,8 @@
 /* 花エリア */
 .flower-area {
     text-align: center;
+    /* max-width: 260px;
+    margin: 0 auto; */
 }
 
 .flower {
@@ -16,6 +18,15 @@
     width: 160px;
     height: auto;   /* or 250 */
     margin: 30px auto 8px;
+}
+
+/* 花の画像をスマホ画面に収める */
+.flower-img {
+    width: 100%;
+    max-width: min(70vw, 240px);   /* スマホ想定サイズ　180px */
+    height: auto;
+    display: block;
+    margin: 24px auto 0;
 }
 
 .petals {
@@ -219,5 +230,11 @@ button:disabled {
         left: 55px;
         width: 110px;
         height: 110px;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    .flower-img {
+        max-width: 280px;
     }
 }
