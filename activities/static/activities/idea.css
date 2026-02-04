@@ -1,85 +1,97 @@
 /* ページタイトル */
 .idea-page-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 16px;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+}
+
+h2 {
+  display: block;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.idea-textarea {
+  width: 100%;
+  height: 100px;
+  box-sizing: border-box;
+  padding: 5px;
+  border-radius: 3px;
 }
 
 /* 投稿一覧 */
 .idea-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px; /* ← カード間の隙間 */
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* ← カード間の隙間 */
 }
 
 /* 投稿カード */
 .idea-card {
-    background: #d9d9d9;
-    border-radius: 16px;
-    padding: 16px;
+  background: #d9d9d9;
+  border-radius: 16px;
+  padding: 16px;
 }
 
 /* ヘッダー */
 .idea-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
 }
 
 .user-icon {
-    width: 40px;
-    height: 40px;
-    background: #fff;
-    border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 50%;
 }
 
 .user-name {
-    font-weight: bold;
-    font-size: 14px;
+  font-weight: bold;
+  font-size: 14px;
 }
 
 .idea-date {
-    font-size: 12px;
-    color: #666;
+  font-size: 12px;
+  color: #666;
 }
 
 /* 本文 */
 .idea-main-text {
-    font-weight: bold;
-    margin: 8px 0;
+  font-weight: bold;
+  margin: 8px 0;
 }
 
 .idea-sub-text {
-    font-size: 14px;
-    line-height: 1.4;
+  font-size: 14px;
+  line-height: 1.4;
 }
 
 /* 写真 */
 .idea-body {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 12px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
 }
 
 .idea-image {
-    width: 80px;
-    height: 80px;
-    background: #bcbcbc;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 80px;
+  height: 80px;
+  background: #bcbcbc;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* フッター */
 .idea-footer {
-    display: flex;
-    gap: 16px;
-    margin-top: 12px;
-    font-size: 13px;
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+  font-size: 13px;
 }
 
-
-
-
+/* タイトル（h2.idia-title）を中央寄せ */
