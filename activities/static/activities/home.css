@@ -8,14 +8,17 @@
 
 /* 花エリア */
 .flower-area {
-    text-align: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: flex-end;
 }
 
 .flower {
     position: relative;
     width: 160px;
-    height: auto;   /* or 250 */
-    margin: 30px auto 8px;
+    height: auto;
+    margin: 0;
+    grid-column: 2;
 }
 
 .petals {
@@ -51,14 +54,33 @@
 }
 
 .days {
-    margin-top: 30px;
+    margin-top: 0px;
     font-size: 14px;
     text-align: left;
+    display: block;
+    grid-column: 1;
 }
 
-.days span {
-    font-size: 22px;
+.days .label {
+    font-size: 14px;
+    line-height: 1;
+    display: block;
+}
+
+.days span:nth-child(2),
+.days span:nth-child(3) {
+    display: inline;
+}
+
+.days span:nth-child(2) {
+    font-size: 80px;
     font-weight: bold;
+    line-height: 0.8;
+}
+
+.days .unit {
+    font-size: 14px;
+    margin-left: 6px;
 }
 
 /* おすすめ */
