@@ -1,0 +1,72 @@
+{% extends "activities/base.html" %}
+{% load static %}
+
+{% block title %}アイデア{% endblock %}
+{% block page_title %}アイデア{% endblock %}
+{% block hamburger_title %}アイデア{% endblock %}
+
+{% block content %}
+<section class="idea-page">
+
+    <h2 class="idea-title">みんなの健康アイデア</h2>
+
+    {# ===== 投稿フォーム ===== #}
+    {% if user.is_authenticated %}
+    <form method="post" class="idea-post-form">
+        {% csrf_token %}
+        <textarea
+            name="content"
+            class="idea-textarea"
+            placeholder="今の健康アイデアを投稿"
+            required
+        ></textarea>
+        <button type="submit" class="idea-post-button">
+            投稿
+        </button>
+    </form>
+    {% else %}
+        <p>投稿するにはログインしてください</p>
+    {% endif %}
+
+    <div class="idea-list">
+
+        {# ===== アイデア一覧 ===== #}
+        {% for idea in ideas %}
+        <article class="idea-card">
+
+            <div class="idea-header">
+                <div class="idea-user">
+                    <div class="user-icon"></div>
+                    <div>
+                        <p class="user-name">
+                            {{ idea.user.username }}
+                        </p>
+                        <p class="idea-date">
+                            {{ idea.created_at|date:"n/j H:i" }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="idea-body">
+                <div class="idea-text">
+                    <p class="idea-main">
+                        {{ idea.content }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="idea-footer">
+                <span class="like">♡</span>
+                <span class="comment">コメント</span>
+            </div>
+
+        </article>
+        {% empty %}
+            <p>まだ投稿がありません</p>
+        {% endfor %}
+
+    </div>
+
+</section>
+{% endblock %}
