@@ -21,11 +21,7 @@ body {
     max-width: 390px;
     min-height: 100vh;
     margin: 0 auto;
-<<<<<<< HEAD
     background: #EEFFE6;
-=======
-    background-color: #f3fcee;
->>>>>>> origin/main
     display: flex;
     flex-direction: column;
 }
