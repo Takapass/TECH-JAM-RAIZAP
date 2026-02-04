@@ -11,6 +11,11 @@ from .forms import IdeaForm
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseForbidden
 
+from .forms import EmailChangeForm # 段取り
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
+
 
 
 def login_view(request):
@@ -331,3 +336,30 @@ def change_password(request):
             return redirect('profile')
 
     return render(request, 'activities/change_password.html')
+
+
+
+# 段取り
+@login_required
+def change_email(request):
+    if request.method == 'POST':
+        form = EmailChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = EmailChangeForm(instance=request.user)
+    return render(request, 'activities/change_email.html', {'form': form})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request.user)
+            return redirect('profile')
+        return render(request, 'activities/change_password.html', {'form': form})
+    else:
+        form = PasswordChangeForm(user=request.user)
+        return render(request, 'activities/change_password.html', {'form': form})

@@ -31,15 +31,16 @@
         </div>
     </div>
 
-    <div class="bio-box">
-        <div class="bio-label">自己紹介</div>
-        <div class="bio-area">{{ user.profile.bio|default_if_none:"" }}</div>
+   <div class="profile-input-group">
+        <textarea id="intro" placeholder="自己紹介を入力してください"></textarea>
     </div>
+
 
     <div class="settings-list">
         <a href="{% url 'change_email' %}" class="settings-item email-change">
             <span class="item-icon"></span>
             <span class="item-text">メールアドレス変更</span>
+            <p>現在のメール: {{ user.email }}</p>
         </a>
         <div class="divider"></div>
         <a href="{% url 'change_password' %}" class="settings-item change-password">

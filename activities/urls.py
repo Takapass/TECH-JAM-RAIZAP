@@ -14,6 +14,6 @@ urlpatterns = [
     path("stamp/skip/", views.stamp_skip, name="stamp_skip"),
     path('ideas/<int:idea_id>/delete/', delete_idea, name='delete_idea'),
     path('ideas/<int:idea_id>/react/<str:reaction_type>/', react_idea, name='react_idea'),
-    path("change_email/", views.change_email, name="change_email"),
-    path("change_password/", views.change_password, name="change_password"),
+    path("change-email/", views.change_email, name="change_email"),
+    path("change-password/", views.change_password, name="change_password"),
 ]
