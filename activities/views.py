@@ -354,7 +354,7 @@ def change_password(request):
         form = PasswordChangeForm(user=request.user, data=request.POST)
         if form.is_valid():
             user = form.save()
-            update_session_auth_hash(request.user)
+            update_session_auth_hash(request, user)
             return redirect('profile')
         return render(request, 'activities/change_password.html', {'form': form})
     else:
