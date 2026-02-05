@@ -69,6 +69,7 @@ class Idea(models.Model):
     def __str__(self):
         return self.content[:20]
 
+
 class IdeaReaction(models.Model):
     REACTION_CHOICES = [
         ('heart', '♡'),
