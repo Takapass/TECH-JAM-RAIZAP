@@ -9,7 +9,6 @@ from .models import DailyStamp
 from .models import Idea, IdeaReaction
 from .forms import IdeaForm
 from django.shortcuts import get_object_or_404
-<<<<<<< HEAD
 from django.http import HttpResponseForbidden
 
 from .forms import EmailChangeForm # 段取り
@@ -17,10 +16,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 
 
-=======
 from django.http import HttpResponseForbidden, JsonResponse
 from django.templatetags.static import static
->>>>>>> origin/main
 
 
 def login_view(request):
