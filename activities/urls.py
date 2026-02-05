@@ -16,4 +16,5 @@ urlpatterns = [
     path('ideas/<int:idea_id>/react/<str:reaction_type>/', react_idea, name='react_idea'),
     path("change_email/", views.change_email, name="change_email"),
     path("change_password/", views.change_password, name="change_password"),
+    path('idea/', views.idea_view, name='idea'),
 ]

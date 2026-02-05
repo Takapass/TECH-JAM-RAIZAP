@@ -69,6 +69,7 @@ class Idea(models.Model):
     def __str__(self):
         return self.content[:20]
 
+
 class IdeaReaction(models.Model):
     REACTION_CHOICES = [
         ('heart', '♡'),
@@ -78,3 +79,23 @@ class IdeaReaction(models.Model):
     idea = models.ForeignKey(Idea, on_delete=models.CASCADE, related_name='reactions')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     reaction_type = models.CharField(max_length=10, choices=REACTION_CHOICES)
+
+
+class Group(models.Model):
+    name = models.CharField(max_length=100)
+    members = models.ManyToManyField(
+        User,
+        related_name="activity_groups"  # ← ここが超重要
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class GroupInvite(models.Model):
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    invited_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    email = models.EmailField(blank=True, null=True)
+    username = models.CharField(max_length=150, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_accepted = models.BooleanField(default=False)

@@ -12,7 +12,6 @@ from django.shortcuts import get_object_or_404
 from django.http import HttpResponseForbidden
 
 
-
 def login_view(request):
     if request.method == "POST":
         login_id = request.POST.get("login_id")
