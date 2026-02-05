@@ -30,7 +30,8 @@ body {
 .header {
     height: 56px;
     border-bottom: 1px solid #e0e0e0;
-    background-color: #eee6e6;
+    background-color: #4ECF34;
+    color: #fff;
 }
 
 .header-inner {
@@ -40,11 +41,13 @@ body {
     padding: 0 16px;
 }
 
+
 .hamburger {
     font-size: 22px;
     background: none;
     border: none;
     cursor: pointer;
+    color: #fff;
 }
 
 .header-title {
