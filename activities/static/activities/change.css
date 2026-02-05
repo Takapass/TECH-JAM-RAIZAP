@@ -42,3 +42,11 @@ label {
   background-color: #ffffff;
   color: #4ECF34;
 }
+
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #4ECF34;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
