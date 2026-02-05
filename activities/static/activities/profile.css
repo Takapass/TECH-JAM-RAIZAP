@@ -195,3 +195,21 @@
     margin-top: 20px;
     cursor: pointer;
 }
+
+/* 自己紹介 textarea 用 */
+.profile-input-group textarea {
+    width: 100%;
+    min-height: 160px;
+    padding: 16px;
+    border: 3px solid #2b8bd6;   /* 青い枠 */
+    border-radius: 18px;         /* 角丸 */
+    background: #f3f3f3;         /* 薄いグレー */
+    font-size: 16px;
+    box-sizing: border-box;
+    outline: none;
+    resize: none;
+}
+
+.profile-input-group textarea:focus {
+    box-shadow: 0 0 0 3px rgba(43,139,214,0.2);
+}
