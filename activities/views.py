@@ -11,6 +11,13 @@ from .forms import IdeaForm
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponseForbidden
 
+from .forms import EmailChangeForm # 段取り
+from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth import update_session_auth_hash
+
+
+from django.http import HttpResponseForbidden, JsonResponse
+from django.templatetags.static import static
 
 def login_view(request):
     if request.method == "POST":
@@ -30,7 +37,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return redirect("activity_list")
+            return redirect("home")
         else:
             messages.error(
                 request,
@@ -38,7 +45,6 @@ def login_view(request):
             )
 
     return render(request, "activities/login.html")
-
 
 
 def logout_view(request):
@@ -91,7 +97,7 @@ def activity_list(request):
             activity.save()
 
         messages.success(request, "保存しました！")
-        return redirect("activity_list")
+        return redirect("home")
 
     return render(request, "activities/home.html", {"activities": activities})
 
@@ -111,16 +117,34 @@ def create_activity(request):
 
 @login_required
 def home(request):
-    stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
+    stamp, _ = DailyStamp.objects.get_or_create(
+        user=request.user,
+        defaults={
+            "total_days": 0,
+            "done_days": 0,
+            "skipped_days": 0,
+            "growth_stage": 0,
+            "growth_count": 0,
+        }
+    )
 
-    context = {
-        "total_days": stamp.total_days,
-        "done_days": stamp.done_days,
-        "skipped_days": stamp.skipped_days,
-        "growth_stage": stamp.growth_stage,
-        "can_stamp": stamp.can_stamp_today(),
+    growth_stage = stamp.growth_stage or 0
+    total_days = stamp.total_days
+
+    image_map = {
+        0: "activities/images/苗-黄.png",
+        1: "activities/images/芽-黄.png",
+        2: "activities/images/蕾-黄.png",
+        3: "activities/images/花-黄.png",
     }
-    return render(request, "activities/home.html", context)
+
+    flower_image = image_map.get(growth_stage, image_map[0])
+
+    return render(request, "activities/home.html", {
+        "total_days": total_days,
+        "growth_stage": growth_stage,
+        "flower_image": flower_image,
+    })
 
 
 @login_required(login_url="login")
@@ -146,45 +170,6 @@ def group_view(request):
     return render(request, "activities/group.html")
 
 
-# @login_required
-# def stamp_done(request):
-#     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
-
-#     if not stamp.can_stamp_today():
-#         return redirect("home")
-
-#     today = timezone.localdate()
-
-#     stamp.last_stamped_date = today
-#     stamp.total_days += 1
-#     stamp.done_days += 1
-#     stamp.growth_count += 1
-
-#     if stamp.growth_count >= 5:
-#         stamp.growth_stage = min(stamp.growth_stage + 1, 2)
-#         stamp.growth_count = 0
-
-#     stamp.save()
-#     return redirect("home")
-
-
-# @login_required
-# def stamp_skip(request):
-#     stamp, _ = DailyStamp.objects.get_or_create(user=request.user)
-
-#     if not stamp.can_stamp_today():
-#         return redirect("home")
-
-#     today = timezone.localdate()
-
-#     stamp.last_skipped_date = today
-#     stamp.total_days += 1
-#     stamp.skipped_days += 1
-
-#     stamp.save()
-#     return redirect("home")
-
-
 @login_required
 def stamp_done(request):
     if request.method != "POST":
@@ -202,15 +187,23 @@ def stamp_done(request):
     stamp.growth_count += 1
 
     if stamp.growth_count >= 5:
-        stamp.growth_stage = min(stamp.growth_stage + 1, 2)
+        stamp.growth_stage = min(stamp.growth_stage + 1, 3)
         stamp.growth_count = 0
 
     stamp.save()
+
+    image_map = {
+        0: "activities/images/苗-黄.png",
+        1: "activities/images/芽-黄.png",
+        2: "activities/images/蕾-黄.png",
+        3: "activities/images/花-黄.png",
+    }
 
     return JsonResponse({
         "total_days": stamp.total_days,
         "done_days": stamp.done_days,
         "growth_stage": stamp.growth_stage,
+        "image_url": static(image_map[stamp.growth_stage]),
     })
 
 
@@ -231,10 +224,18 @@ def stamp_skip(request):
 
     stamp.save()
 
+    image_map = {
+        0: "activities/images/苗-黄.png",
+        1: "activities/images/芽-黄.png",
+        2: "activities/images/蕾-黄.png",
+        3: "activities/images/花-黄.png",
+    }
+
     return JsonResponse({
         "total_days": stamp.total_days,
         "done_days": stamp.done_days,
         "growth_stage": stamp.growth_stage,
+        "image_url": static(image_map[stamp.growth_stage]),
     })
 
 
@@ -271,6 +272,7 @@ def idea_view(request):
         'reactions': reactions,
     })
 
+
 @login_required
 def react_idea(request, idea_id, reaction_type):
     idea = Idea.objects.get(id=idea_id)
@@ -288,6 +290,7 @@ def react_idea(request, idea_id, reaction_type):
             reaction_type=reaction_type
         )
     return redirect('idea')
+
 
 @login_required
 def delete_idea(request, idea_id):
@@ -329,3 +332,30 @@ def change_password(request):
             return redirect('profile')
 
     return render(request, 'activities/change_password.html')
+
+
+
+# 段取り
+@login_required
+def change_email(request):
+    if request.method == 'POST':
+        form = EmailChangeForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+    else:
+        form = EmailChangeForm(instance=request.user)
+    return render(request, 'activities/change_email.html', {'form': form})
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect('profile')
+        return render(request, 'activities/change_password.html', {'form': form})
+    else:
+        form = PasswordChangeForm(user=request.user)
+        return render(request, 'activities/change_password.html', {'form': form})
