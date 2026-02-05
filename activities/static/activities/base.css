@@ -21,7 +21,7 @@ body {
     max-width: 390px;
     min-height: 100vh;
     margin: 0 auto;
-    background-color: #f3fcee;
+    background: #EEFFE6;
     display: flex;
     flex-direction: column;
 }
@@ -30,7 +30,7 @@ body {
 .header {
     height: 56px;
     border-bottom: 1px solid #e0e0e0;
-    background-color: #eee6e6;
+    background-color: #4ECF34;
 }
 
 .header-inner {
@@ -80,7 +80,7 @@ body {
 .footer {
     height: 64px;
     border-top: 1px solid #e0e0e0;
-    background-color: #fafafa;
+    background-color: rgba(101, 237, 74,0.2);
 }
 
 .bottom-nav {

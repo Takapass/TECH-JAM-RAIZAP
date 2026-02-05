@@ -76,6 +76,7 @@ class IdeaReaction(models.Model):
         ('like', '👍'),
         ('sad', '😢'),
     ]
+
     idea = models.ForeignKey(Idea, on_delete=models.CASCADE, related_name='reactions')
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     reaction_type = models.CharField(max_length=10, choices=REACTION_CHOICES)
