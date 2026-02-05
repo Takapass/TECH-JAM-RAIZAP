@@ -81,10 +81,22 @@
         <!-- フッター（下部ナビ） -->
         <footer class="footer">
             <nav class="bottom-nav">
-                <a href="{% url 'home' %}" class="nav-item">ホーム</a>
-                <a href="{% url 'group' %}" class="nav-item">グループ</a>
-                <a href="{% url 'idea' %}" class="nav-item">アイデア</a>
-                <a href="{% url 'profile' %}" class="nav-item">プロフィール</a>
+                <a href="{% url 'home' %}" class="nav-item">
+                    <img src="{% static 'activities/images/home.png' %}" alt="ホーム">
+                    <span>ホーム</span>
+                </a>
+                <a href="{% url 'group' %}" class="nav-item">
+                    <img src="{% static 'activities/images/group.png' %}" alt="グループ">
+                    <span>グループ</span>
+                </a>
+                <a href="{% url 'idea' %}" class="nav-item">
+                    <img src="{% static 'activities/images/idea.png' %}" alt="アイデア">
+                    <span>アイデア</span>
+                </a>
+                <a href="{% url 'profile' %}" class="nav-item">
+                    <img src="{% static 'activities/images/profile.png' %}" alt="プロフィール">
+                    <span>プロフィール</span>
+                </a>
             </nav>
         </footer>
 
